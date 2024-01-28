@@ -29,7 +29,7 @@ import com.example.collegeschedulerapp.databinding.FragmentNotificationsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment {
+public class NotificationsFragment extends Fragment implements TaskAdapter.OnDeleteButtonClickListener {
 
     private FragmentNotificationsBinding binding;
     private List<Task> taskList;
@@ -58,7 +58,9 @@ public class NotificationsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         // Set the adapter for the RecyclerView
+        taskAdapter.setOnDeleteButtonClickListener(this);
         recyclerView.setAdapter(taskAdapter);
+
 
         loadTasksFromPrefs();
 
@@ -76,6 +78,19 @@ public class NotificationsFragment extends Fragment {
         fab.setOnClickListener(view -> showAddTaskDialog());
 
         return root;
+    }
+
+    public void onDeleteButtonClick(int position) {
+        // Remove the task at the clicked position
+        if (position >= 0 && position < taskList.size()) {
+            taskList.remove(position);
+
+            // Save tasks to SharedPreferences
+            saveTasksToPrefs();
+
+            // Notify the adapter that the data set has changed
+            taskAdapter.notifyDataSetChanged();
+        }
     }
 
 

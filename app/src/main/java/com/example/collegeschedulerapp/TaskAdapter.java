@@ -3,7 +3,10 @@ package com.example.collegeschedulerapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
@@ -13,6 +16,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     public TaskAdapter(List<Task> taskList) {
         this.taskList = taskList;
+    }
+
+    public interface OnDeleteButtonClickListener {
+        void onDeleteButtonClick(int position);
+    }
+
+    private static OnDeleteButtonClickListener onDeleteButtonClickListener;
+
+    public void setOnDeleteButtonClickListener(OnDeleteButtonClickListener listener) {
+        this.onDeleteButtonClickListener = listener;
     }
 
     @Override
@@ -38,6 +51,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.todoTitle);
+            Button buttonDelete = itemView.findViewById(R.id.deleteTODO);
+            buttonDelete.setOnClickListener(v -> {
+                if (onDeleteButtonClickListener != null) {
+                    onDeleteButtonClickListener.onDeleteButtonClick(getAdapterPosition());
+                }
+            });
         }
     }
 }
