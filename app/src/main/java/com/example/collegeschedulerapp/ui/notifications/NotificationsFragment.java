@@ -29,7 +29,7 @@ import com.example.collegeschedulerapp.databinding.FragmentNotificationsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment implements TaskAdapter.OnDeleteButtonClickListener {
+public class NotificationsFragment extends Fragment implements TaskAdapter.OnDeleteButtonClickListener, TaskAdapter.OnCheckedChangeListener {
 
     private FragmentNotificationsBinding binding;
     private List<Task> taskList;
@@ -61,6 +61,7 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
         taskAdapter.setOnDeleteButtonClickListener(this);
         recyclerView.setAdapter(taskAdapter);
 
+        taskAdapter.setOnCheckedChangeListener(this);
 
         loadTasksFromPrefs();
 
@@ -78,6 +79,14 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
         fab.setOnClickListener(view -> showAddTaskDialog());
 
         return root;
+    }
+
+    public void onCheckboxChanged(int position, boolean isChecked) {
+        if (position >= 0 && position < taskList.size()) {
+            taskList.get(position).setChecked(isChecked);
+            saveTasksToPrefs();
+            taskAdapter.notifyDataSetChanged();
+        }
     }
 
     public void onDeleteButtonClick(int position) {
@@ -111,7 +120,7 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
             String taskTitle = editTextTask.getText().toString();
             if (!taskTitle.isEmpty()) {
                 // Add the new task to the list
-                taskList.add(new Task(taskTitle));
+                taskList.add(new Task(taskTitle, false));
 
                 // Save tasks to SharedPreferences
                 saveTasksToPrefs();

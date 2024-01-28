@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxTODO"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
             android:text="A PLACEHOLDER TODO ITEM"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/deleteTODO"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
+            app:layout_constraintStart_toEndOf="@+id/checkBoxTODO"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
