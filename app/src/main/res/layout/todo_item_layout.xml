@@ -28,20 +28,31 @@
             android:gravity="center"
             android:text="A PLACEHOLDER TODO ITEM"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/deleteTODO"
+            app:layout_constraintEnd_toStartOf="@id/editTODO"
             app:layout_constraintStart_toEndOf="@+id/checkBoxTODO"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/editTODO"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@android:drawable/ic_menu_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/deleteTODO"
+            app:layout_constraintStart_toEndOf="@id/todoTitle"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
             android:id="@+id/deleteTODO"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:background="@android:drawable/ic_delete"
             android:backgroundTint="#FF0000"
             android:textColor="#FF0000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/todoTitle"
+            app:layout_constraintStart_toEndOf="@id/editTODO"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
