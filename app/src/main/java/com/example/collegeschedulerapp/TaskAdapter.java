@@ -36,6 +36,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         void onDeleteButtonClick(int position);
     }
 
+    public interface OnEditButtonClickListener {
+        void onEditButtonClick(int position);
+    }
+
+    private static OnEditButtonClickListener onEditButtonClickListener;
+
+    public void setOnEditButtonClickListener(OnEditButtonClickListener listener) {
+        this.onEditButtonClickListener = listener;
+    }
+
     private static OnDeleteButtonClickListener onDeleteButtonClickListener;
 
     public void setOnDeleteButtonClickListener(OnDeleteButtonClickListener listener) {
@@ -70,7 +80,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return taskList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
         public CheckBox checkBox;
 
@@ -78,6 +88,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.todoTitle);
             checkBox = itemView.findViewById(R.id.checkBoxTODO);
+
+            Button buttonEdit = itemView.findViewById(R.id.editTODO);
+            buttonEdit.setOnClickListener(v -> {
+                if (onEditButtonClickListener != null) {
+                    onEditButtonClickListener.onEditButtonClick(getAdapterPosition());
+                }
+            });
+
             Button buttonDelete = itemView.findViewById(R.id.deleteTODO);
             buttonDelete.setOnClickListener(v -> {
                 if (onDeleteButtonClickListener != null) {

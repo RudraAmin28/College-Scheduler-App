@@ -29,7 +29,7 @@ import com.example.collegeschedulerapp.databinding.FragmentNotificationsBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment implements TaskAdapter.OnDeleteButtonClickListener, TaskAdapter.OnCheckedChangeListener {
+public class NotificationsFragment extends Fragment implements TaskAdapter.OnDeleteButtonClickListener, TaskAdapter.OnCheckedChangeListener, TaskAdapter.OnEditButtonClickListener {
 
     private FragmentNotificationsBinding binding;
     private List<Task> taskList;
@@ -77,6 +77,7 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
 
         // Set click listener for the FloatingActionButton
         fab.setOnClickListener(view -> showAddTaskDialog());
+        taskAdapter.setOnEditButtonClickListener(this);
 
         return root;
     }
@@ -111,9 +112,9 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
         AlertDialog dialog = builder.create();
 
         // Find views in the dialog layout
-        EditText editTextTask = dialogView.findViewById(R.id.editTextTask);
-        Button buttonAddTask = dialogView.findViewById(R.id.buttonAddTask);
-        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
+        EditText editTextTask = dialogView.findViewById(R.id.editTextTask2);
+        Button buttonAddTask = dialogView.findViewById(R.id.buttonAddTask2);
+        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel2);
 
         // Set click listener for the "Add Task" button
         buttonAddTask.setOnClickListener(v -> {
@@ -171,5 +172,54 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void onEditButtonClick(int position) {
+        // Handle the edit action for the task at the clicked position
+        if (position >= 0 && position < taskList.size()) {
+
+            showEditTaskDialog(position);
+        }
+    }
+
+
+    private void showEditTaskDialog(int position) {
+        // Create the AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.popup_edit_task, null);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        // Find views in the dialog layout
+        EditText editTextTask = dialogView.findViewById(R.id.editTextTask2);
+        Button buttonEditTask = dialogView.findViewById(R.id.buttonAddTask2);
+        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel2);
+
+        // Set the current task title in the edit text
+        editTextTask.setText(taskList.get(position).getTitle());
+
+        // Set click listener for the "Edit Task" button
+        buttonEditTask.setOnClickListener(v -> {
+            String editedTaskTitle = editTextTask.getText().toString();
+            if (!editedTaskTitle.isEmpty()) {
+                // Update the task title
+                taskList.get(position).setTitle(editedTaskTitle);
+
+                // Save tasks to SharedPreferences
+                saveTasksToPrefs();
+
+                // Notify the adapter that the data set has changed
+                taskAdapter.notifyDataSetChanged();
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        // Set click listener for the "Cancel" button
+        buttonCancel.setOnClickListener(v -> dialog.dismiss());
+
+        // Show the dialog
+        dialog.show();
     }
 }
