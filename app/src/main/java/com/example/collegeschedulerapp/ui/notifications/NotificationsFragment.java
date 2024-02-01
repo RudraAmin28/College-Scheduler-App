@@ -22,8 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegeschedulerapp.R;
-import com.example.collegeschedulerapp.Task;
-import com.example.collegeschedulerapp.TaskAdapter;
 import com.example.collegeschedulerapp.databinding.FragmentNotificationsBinding;
 
 import java.util.ArrayList;
@@ -52,7 +50,7 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
         taskAdapter = new TaskAdapter(taskList);
 
         // Find the RecyclerView in the fragment layout
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewTODO);
 
         // Set up the RecyclerView with a LinearLayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp;
+package com.example.collegeschedulerapp.ui.notifications;
 
 public class Task {
     private String title;

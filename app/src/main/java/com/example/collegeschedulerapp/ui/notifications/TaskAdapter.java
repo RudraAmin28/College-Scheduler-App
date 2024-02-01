@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp;
+package com.example.collegeschedulerapp.ui.notifications;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,10 @@ import android.widget.TextView;
 import android.widget.CheckBox;
 
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.collegeschedulerapp.R;
+
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
