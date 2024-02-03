@@ -5,10 +5,12 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -130,6 +132,34 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         timePickerDialog.show();
     }
 
+    private List<String> getSelectedDays(CheckBox mondayCheckBox, CheckBox tuesdayCheckBox, CheckBox wednesdayCheckBox, CheckBox thursdayCheckBox, CheckBox fridayCheckBox, CheckBox saturdayCheckBox, CheckBox sundayCheckBox) {
+        List<String> selectedDays = new ArrayList<>();
+
+        if (mondayCheckBox.isChecked()) {
+            selectedDays.add("Mon");
+        }
+        if (tuesdayCheckBox.isChecked()) {
+            selectedDays.add("Tue");
+        }
+        if (wednesdayCheckBox.isChecked()) {
+            selectedDays.add("Wed");
+        }
+        if (thursdayCheckBox.isChecked()) {
+            selectedDays.add("Thu");
+        }
+        if (fridayCheckBox.isChecked()) {
+            selectedDays.add("Fri");
+        }
+        if (saturdayCheckBox.isChecked()) {
+            selectedDays.add("Sat");
+        }
+        if (sundayCheckBox.isChecked()) {
+            selectedDays.add("Sun");
+        }
+
+        return selectedDays;
+    }
+
 
 
     private void showAddTaskDialog() {
@@ -151,8 +181,34 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         TextView selectedStartTime = dialogView.findViewById(R.id.selectedStartTime);
         TextView selectedEndTime = dialogView.findViewById(R.id.selectedEndTime);
 
+        CheckBox mondayCheckBox = dialogView.findViewById(R.id.mondayCheckBox);
+        CheckBox tuesdayCheckBox = dialogView.findViewById(R.id.tuesdayCheckBox);
+        CheckBox wednesdayCheckBox = dialogView.findViewById(R.id.wednesdayCheckBox);
+        CheckBox thursdayCheckBox = dialogView.findViewById(R.id.thursdayCheckBox);
+        CheckBox fridayCheckBox = dialogView.findViewById(R.id.fridayCheckBox);
+        CheckBox saturdayCheckBox = dialogView.findViewById(R.id.saturdayCheckBox);
+        CheckBox sundayCheckBox = dialogView.findViewById(R.id.sundayCheckBox);
 
+        buttonAddClass.setOnClickListener(v -> {
+            String className = addClassNameTextView.getText().toString();
+            String professorName = addClassProfessorTextView.getText().toString();
+            List<String> selectedDays = getSelectedDays(mondayCheckBox, tuesdayCheckBox, wednesdayCheckBox, thursdayCheckBox, fridayCheckBox, saturdayCheckBox, sundayCheckBox);
 
+            if (!className.isEmpty() && !professorName.isEmpty() && selectedDays != null) {
+                // Add the new class to the list
+                Classes newClass = new Classes(className, professorName, selectedStartTime.getText().toString(), selectedEndTime.getText().toString(), selectedDays);
+                classesList.add(newClass);
+
+                // Save classes to SharedPreferences
+                saveTasksToPrefs();
+
+                // Notify the adapter that the data set has changed
+                classesAdapter.notifyDataSetChanged();
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
 
 
         buttonStartTime.setOnClickListener(new View.OnClickListener() {
@@ -166,26 +222,6 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
             @Override
             public void onClick(View view) {
                 showTimePickerDialog(selectedEndTime);
-            }
-        });
-
-        // Set click listener for the "Add Task" button
-        buttonAddClass.setOnClickListener(v -> {
-            String className = addClassNameTextView.getText().toString();
-            String professorName = addClassProfessorTextView.getText().toString();
-            if (!className.isEmpty() && !professorName.isEmpty()) {
-                // Add the new task to the list
-                Classes newClass = new Classes(className, professorName, selectedStartTime.getText().toString(), selectedEndTime.getText().toString());
-                classesList.add(newClass);
-
-                // Save tasks to SharedPreferences
-                saveTasksToPrefs();
-
-                // Notify the adapter that the data set has changed
-                classesAdapter.notifyDataSetChanged();
-
-                // Dismiss the dialog
-                dialog.dismiss();
             }
         });
 
@@ -263,6 +299,44 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         selectedStartTime.setText(classesList.get(position).getStartTime());
         selectedEndTime.setText(classesList.get(position).getEndTime());
 
+        CheckBox mondayCheckBox = dialogView.findViewById(R.id.mondayCheckBox);
+        CheckBox tuesdayCheckBox = dialogView.findViewById(R.id.tuesdayCheckBox);
+        CheckBox wednesdayCheckBox = dialogView.findViewById(R.id.wednesdayCheckBox);
+        CheckBox thursdayCheckBox = dialogView.findViewById(R.id.thursdayCheckBox);
+        CheckBox fridayCheckBox = dialogView.findViewById(R.id.fridayCheckBox);
+        CheckBox saturdayCheckBox = dialogView.findViewById(R.id.saturdayCheckBox);
+        CheckBox sundayCheckBox = dialogView.findViewById(R.id.sundayCheckBox);
+
+
+        buttonAddClass.setOnClickListener(v -> {
+            String editedClassName = addClassNameTextView.getText().toString();
+            String editedProfessorName = addClassProfessorTextView.getText().toString();
+            String editedStartTime = selectedStartTime.getText().toString();
+            String editedEndTime = selectedEndTime.getText().toString();
+            List<String> editedSelectedDays = getSelectedDays(mondayCheckBox, tuesdayCheckBox, wednesdayCheckBox, thursdayCheckBox, fridayCheckBox, saturdayCheckBox, sundayCheckBox);
+
+            // Check if any of the essential fields are empty or days are null
+            if (!editedClassName.isEmpty() && !editedProfessorName.isEmpty() && editedStartTime != null && editedEndTime != null && editedSelectedDays != null) {
+                // Update the class information
+                classesList.get(position).setClassName(editedClassName);
+                classesList.get(position).setProfessor(editedProfessorName);
+                classesList.get(position).setStartTime(editedStartTime);
+                classesList.get(position).setEndTime(editedEndTime);
+                classesList.get(position).setSelectedDays(editedSelectedDays);
+
+                // Save classes to SharedPreferences
+                saveTasksToPrefs();
+
+                // Notify the adapter that the data set has changed
+                classesAdapter.notifyDataSetChanged();
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+
+
         buttonStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -277,30 +351,6 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
             }
         });
 
-        // Set click listener for the "Edit Task" button
-        buttonAddClass.setOnClickListener(v -> {
-            String editedClassName = addClassNameTextView.getText().toString();
-            String editedProfessorName = addClassProfessorTextView.getText().toString();
-            String editedStartTime = selectedStartTime.getText().toString();
-            String editedEndTime = selectedEndTime.getText().toString();
-
-            if (!editedClassName.isEmpty() && !editedProfessorName.isEmpty()) {
-                // Update the class information
-                classesList.get(position).setClassName(editedClassName);
-                classesList.get(position).setProfessor(editedProfessorName);
-                classesList.get(position).setStartTime(editedStartTime);
-                classesList.get(position).setEndTime(editedEndTime);
-
-                // Save tasks to SharedPreferences
-                saveTasksToPrefs();
-
-                // Notify the adapter that the data set has changed
-                classesAdapter.notifyDataSetChanged();
-
-                // Dismiss the dialog
-                dialog.dismiss();
-            }
-        });
 
         // Set click listener for the "Cancel" button
         buttonCancelClass.setOnClickListener(v -> dialog.dismiss());

@@ -1,4 +1,7 @@
 package com.example.collegeschedulerapp.ui.home;
+
+import java.util.List;
+
 public class Classes {
     public String getClassName() {
         return className;
@@ -20,12 +23,23 @@ public class Classes {
     private String professor;
     private String startTime;
     private String endTime;
+    private List<String> selectedDays;
 
-    public Classes(String className, String professor, String startTime, String endTime) {
+    public List<String> getSelectedDays() {
+        return selectedDays;
+    }
+
+    public void setSelectedDays(List<String> selectedDays) {
+        this.selectedDays = selectedDays;
+    }
+
+
+    public Classes(String className, String professor, String startTime, String endTime, List<String> selectedDays) {
         this.className = className;
         this.professor = professor;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.selectedDays = selectedDays;
     }
 
     // ... other methods and getters
