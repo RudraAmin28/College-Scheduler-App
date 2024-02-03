@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp.ui.home;
+package com.example.collegeschedulerapp.ui.Classes;
 public class Classes {
     private String className;
     private String professor;

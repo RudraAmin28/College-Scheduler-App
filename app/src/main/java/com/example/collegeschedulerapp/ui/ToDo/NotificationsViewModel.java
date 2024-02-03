@@ -1,7 +1,5 @@
-package com.example.collegeschedulerapp.ui.notifications;
+package com.example.collegeschedulerapp.ui.ToDo;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class NotificationsViewModel extends ViewModel {

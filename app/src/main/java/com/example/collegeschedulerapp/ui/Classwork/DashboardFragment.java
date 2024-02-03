@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp.ui.dashboard;
+package com.example.collegeschedulerapp.ui.Classwork;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager; // Add this import
 import androidx.recyclerview.widget.RecyclerView;
 

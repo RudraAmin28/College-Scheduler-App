@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp.ui.dashboard;
+package com.example.collegeschedulerapp.ui.Classwork;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.Calendar;
+
 import java.util.List;
 import com.example.collegeschedulerapp.R;
 

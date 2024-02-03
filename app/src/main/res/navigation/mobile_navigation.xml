@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.collegeschedulerapp.ui.home.HomeFragment"
+        android:name="com.example.collegeschedulerapp.ui.Classes.HomeFragment"
         android:label="@string/title_classes"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.collegeschedulerapp.ui.dashboard.DashboardFragment"
+        android:name="com.example.collegeschedulerapp.ui.Classwork.DashboardFragment"
         android:label="@string/title_classwork"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.collegeschedulerapp.ui.notifications.NotificationsFragment"
+        android:name="com.example.collegeschedulerapp.ui.ToDo.NotificationsFragment"
         android:label="@string/title_todo"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

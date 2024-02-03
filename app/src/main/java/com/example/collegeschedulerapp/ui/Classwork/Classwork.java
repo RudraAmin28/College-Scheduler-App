@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp.ui.dashboard;
+package com.example.collegeschedulerapp.ui.Classwork;
 
 public class Classwork {
 

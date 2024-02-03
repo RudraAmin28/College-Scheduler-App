@@ -1,19 +1,14 @@
-package com.example.collegeschedulerapp.ui.notifications;
+package com.example.collegeschedulerapp.ui.Classes;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
-
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,44 +17,46 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegeschedulerapp.R;
-import com.example.collegeschedulerapp.databinding.FragmentNotificationsBinding;
+import com.example.collegeschedulerapp.databinding.FragmentHomeBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment implements TaskAdapter.OnDeleteButtonClickListener, TaskAdapter.OnCheckedChangeListener, TaskAdapter.OnEditButtonClickListener {
+public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButtonClickListener, ClassAdapter.OnEditButtonClickListener {
 
-    private FragmentNotificationsBinding binding;
-    private List<Task> taskList;
-    private TaskAdapter taskAdapter;
+    private FragmentHomeBinding binding;
+    private List<Classes> classesList;
+    private ClassAdapter classesAdapter;
 
-    private static final String PREFS_NAME = "TodoPrefs";
-    private static final String KEY_TASK_LIST = "taskList";
+    private static final String PREFS_NAME = "ClassesPrefs";
+    private static final String KEY_TASK_LIST = "ClassesList";
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        HomeViewModel homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         // Initialize the task list and adapter
-        taskList = new ArrayList<>();
-        taskAdapter = new TaskAdapter(taskList);
+        classesList = new ArrayList<>();
+        classesAdapter = new ClassAdapter(classesList);
 
         // Find the RecyclerView in the fragment layout
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewTODO);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewClasses);
 
         // Set up the RecyclerView with a LinearLayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         // Set the adapter for the RecyclerView
-        taskAdapter.setOnDeleteButtonClickListener(this);
-        recyclerView.setAdapter(taskAdapter);
-
-        taskAdapter.setOnCheckedChangeListener(this);
+        classesAdapter.setOnDeleteButtonClickListener(this);
+        recyclerView.setAdapter(classesAdapter);
 
         loadTasksFromPrefs();
 
@@ -67,65 +64,59 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
 
 
         // Notify the adapter that the data set has changed
-        taskAdapter.notifyDataSetChanged();
+        classesAdapter.notifyDataSetChanged();
 
         // Find the FloatingActionButton in the fragment layout
         com.google.android.material.floatingactionbutton.FloatingActionButton fab =
-                root.findViewById(R.id.floatingActionButtonToDo);
+                root.findViewById(R.id.floatingActionButtonClasses);
 
         // Set click listener for the FloatingActionButton
         fab.setOnClickListener(view -> showAddTaskDialog());
-        taskAdapter.setOnEditButtonClickListener(this);
+        classesAdapter.setOnEditButtonClickListener(this);
 
         return root;
     }
 
-    public void onCheckboxChanged(int position, boolean isChecked) {
-        if (position >= 0 && position < taskList.size()) {
-            taskList.get(position).setChecked(isChecked);
-            saveTasksToPrefs();
-            taskAdapter.notifyDataSetChanged();
-        }
-    }
 
     public void onDeleteButtonClick(int position) {
         // Remove the task at the clicked position
-        if (position >= 0 && position < taskList.size()) {
-            taskList.remove(position);
+        if (position >= 0 && position < classesList.size()) {
+            classesList.remove(position);
 
             // Save tasks to SharedPreferences
             saveTasksToPrefs();
 
             // Notify the adapter that the data set has changed
-            taskAdapter.notifyDataSetChanged();
+            classesAdapter.notifyDataSetChanged();
         }
     }
-
 
     private void showAddTaskDialog() {
         // Create the AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.popup_add_task, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.popup_add_class, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
 
         // Find views in the dialog layout
-        EditText editTextTask = dialogView.findViewById(R.id.editTextTask2);
-        Button buttonAddTask = dialogView.findViewById(R.id.buttonAddTask2);
-        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel2);
+        EditText addClassNameTextView = dialogView.findViewById(R.id.addClassNameTextView);
+        EditText addClassProfessorTextView = dialogView.findViewById(R.id.addClassProfessorTextView);
+        Button buttonAddClass = dialogView.findViewById(R.id.buttonAddClass);
+        Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
         // Set click listener for the "Add Task" button
-        buttonAddTask.setOnClickListener(v -> {
-            String taskTitle = editTextTask.getText().toString();
-            if (!taskTitle.isEmpty()) {
+        buttonAddClass.setOnClickListener(v -> {
+            String className = addClassNameTextView.getText().toString();
+            String professorName = addClassProfessorTextView.getText().toString();
+            if (!className.isEmpty() && !professorName.isEmpty()) {
                 // Add the new task to the list
-                taskList.add(new Task(taskTitle, false));
+                classesList.add(new Classes(className, professorName));
 
                 // Save tasks to SharedPreferences
                 saveTasksToPrefs();
 
                 // Notify the adapter that the data set has changed
-                taskAdapter.notifyDataSetChanged();
+                classesAdapter.notifyDataSetChanged();
 
                 // Dismiss the dialog
                 dialog.dismiss();
@@ -133,7 +124,7 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
         });
 
         // Set click listener for the "Cancel" button
-        buttonCancel.setOnClickListener(v -> dialog.dismiss());
+        buttonCancelClass.setOnClickListener(v -> dialog.dismiss());
 
         // Show the dialog
         dialog.show();
@@ -145,12 +136,12 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
 
         if (tasksJson != null) {
             // Convert JSON string to List<Task>
-            Type listType = new TypeToken<List<Task>>() {}.getType();
-            List<Task> loadedTasks = new Gson().fromJson(tasksJson, listType);
+            Type listType = new TypeToken<List<Classes>>() {}.getType();
+            List<Classes> loadedTasks = new Gson().fromJson(tasksJson, listType);
 
             // Clear existing tasks and add loaded tasks
-            taskList.clear();
-            taskList.addAll(loadedTasks);
+            classesList.clear();
+            classesList.addAll(loadedTasks);
         }
     }
 
@@ -159,7 +150,7 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
         SharedPreferences.Editor editor = prefs.edit();
 
         // Convert List<Task> to JSON string
-        String tasksJson = new Gson().toJson(taskList);
+        String tasksJson = new Gson().toJson(classesList);
 
         // Save tasks to SharedPreferences
         editor.putString(KEY_TASK_LIST, tasksJson);
@@ -174,7 +165,7 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
 
     public void onEditButtonClick(int position) {
         // Handle the edit action for the task at the clicked position
-        if (position >= 0 && position < taskList.size()) {
+        if (position >= 0 && position < classesList.size()) {
 
             showEditTaskDialog(position);
         }
@@ -184,30 +175,34 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
     private void showEditTaskDialog(int position) {
         // Create the AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.popup_edit_task, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.popup_edit_class, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
 
         // Find views in the dialog layout
-        EditText editTextTask = dialogView.findViewById(R.id.editTextTask2);
-        Button buttonEditTask = dialogView.findViewById(R.id.buttonAddTask2);
-        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel2);
+        EditText addClassNameTextView = dialogView.findViewById(R.id.addClassNameTextView);
+        EditText addClassProfessorTextView = dialogView.findViewById(R.id.addClassProfessorTextView);
+        Button buttonAddClass = dialogView.findViewById(R.id.buttonAddClass);
+        Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
         // Set the current task title in the edit text
-        editTextTask.setText(taskList.get(position).getTitle());
+        addClassNameTextView.setText(classesList.get(position).getclassName());
+        addClassProfessorTextView.setText(classesList.get(position).getProfessor());
 
         // Set click listener for the "Edit Task" button
-        buttonEditTask.setOnClickListener(v -> {
-            String editedTaskTitle = editTextTask.getText().toString();
-            if (!editedTaskTitle.isEmpty()) {
+        buttonAddClass.setOnClickListener(v -> {
+            String editedTaskTitle = addClassNameTextView.getText().toString();
+            String editedProfessorTitle = addClassProfessorTextView.getText().toString();
+            if (!editedTaskTitle.isEmpty() && !editedProfessorTitle.isEmpty()) {
                 // Update the task title
-                taskList.get(position).setTitle(editedTaskTitle);
+                classesList.get(position).setClassName(editedTaskTitle);
+                classesList.get(position).setProfessor(editedProfessorTitle);
 
                 // Save tasks to SharedPreferences
                 saveTasksToPrefs();
 
                 // Notify the adapter that the data set has changed
-                taskAdapter.notifyDataSetChanged();
+                classesAdapter.notifyDataSetChanged();
 
                 // Dismiss the dialog
                 dialog.dismiss();
@@ -215,9 +210,11 @@ public class NotificationsFragment extends Fragment implements TaskAdapter.OnDel
         });
 
         // Set click listener for the "Cancel" button
-        buttonCancel.setOnClickListener(v -> dialog.dismiss());
+        buttonCancelClass.setOnClickListener(v -> dialog.dismiss());
 
         // Show the dialog
         dialog.show();
     }
+
+
 }
