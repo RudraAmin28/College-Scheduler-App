@@ -1,6 +1,7 @@
 package com.example.collegeschedulerapp.ui.home;
 
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButtonClickListener, ClassAdapter.OnEditButtonClickListener {
 
@@ -96,6 +99,39 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         }
     }
 
+
+    private void showTimePickerDialog(final TextView textView) {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                requireActivity(),
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                        // Format the selected time and set it to the TextView in AM/PM format
+                        String amPm;
+                        int hour;
+                        if (hourOfDay >= 12) {
+                            amPm = "PM";
+                            hour = (hourOfDay == 12) ? 12 : (hourOfDay - 12);
+                        } else {
+                            amPm = "AM";
+                            hour = (hourOfDay == 0) ? 12 : hourOfDay;
+                        }
+
+                        String formattedTime = String.format(Locale.getDefault(), "%02d:%02d %s", hour, minute, amPm);
+                        textView.setText(formattedTime);
+                    }
+                },
+                // Set the default time to 12:00 AM
+                0,
+                0,
+                false // Set to false to use 12-hour format
+        );
+
+        timePickerDialog.show();
+    }
+
+
+
     private void showAddTaskDialog() {
         // Create the AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -109,13 +145,38 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         Button buttonAddClass = dialogView.findViewById(R.id.buttonAddClass);
         Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
+        Button buttonStartTime = dialogView.findViewById(R.id.ButtonStartTime);
+        Button buttonEndTime = dialogView.findViewById(R.id.ButtonEndTime);
+
+        TextView selectedStartTime = dialogView.findViewById(R.id.selectedStartTime);
+        TextView selectedEndTime = dialogView.findViewById(R.id.selectedEndTime);
+
+
+
+
+
+        buttonStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(selectedStartTime);
+            }
+        });
+
+        buttonEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(selectedEndTime);
+            }
+        });
+
         // Set click listener for the "Add Task" button
         buttonAddClass.setOnClickListener(v -> {
             String className = addClassNameTextView.getText().toString();
             String professorName = addClassProfessorTextView.getText().toString();
             if (!className.isEmpty() && !professorName.isEmpty()) {
                 // Add the new task to the list
-                classesList.add(new Classes(className, professorName));
+                Classes newClass = new Classes(className, professorName, selectedStartTime.getText().toString(), selectedEndTime.getText().toString());
+                classesList.add(newClass);
 
                 // Save tasks to SharedPreferences
                 saveTasksToPrefs();
@@ -190,18 +251,45 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         Button buttonAddClass = dialogView.findViewById(R.id.buttonAddClass);
         Button buttonCancelClass = dialogView.findViewById(R.id.buttonCancelClass);
 
-        // Set the current task title in the edit text
-        addClassNameTextView.setText(classesList.get(position).getclassName());
+        Button buttonStartTime = dialogView.findViewById(R.id.ButtonStartTime);
+        Button buttonEndTime = dialogView.findViewById(R.id.ButtonEndTime);
+
+        TextView selectedStartTime = dialogView.findViewById(R.id.selectedStartTime);
+        TextView selectedEndTime = dialogView.findViewById(R.id.selectedEndTime);
+
+        // Set the current task title, professor, start time, and end time in the edit text and text views
+        addClassNameTextView.setText(classesList.get(position).getClassName());
         addClassProfessorTextView.setText(classesList.get(position).getProfessor());
+        selectedStartTime.setText(classesList.get(position).getStartTime());
+        selectedEndTime.setText(classesList.get(position).getEndTime());
+
+        buttonStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(selectedStartTime);
+            }
+        });
+
+        buttonEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(selectedEndTime);
+            }
+        });
 
         // Set click listener for the "Edit Task" button
         buttonAddClass.setOnClickListener(v -> {
-            String editedTaskTitle = addClassNameTextView.getText().toString();
-            String editedProfessorTitle = addClassProfessorTextView.getText().toString();
-            if (!editedTaskTitle.isEmpty() && !editedProfessorTitle.isEmpty()) {
-                // Update the task title
-                classesList.get(position).setClassName(editedTaskTitle);
-                classesList.get(position).setProfessor(editedProfessorTitle);
+            String editedClassName = addClassNameTextView.getText().toString();
+            String editedProfessorName = addClassProfessorTextView.getText().toString();
+            String editedStartTime = selectedStartTime.getText().toString();
+            String editedEndTime = selectedEndTime.getText().toString();
+
+            if (!editedClassName.isEmpty() && !editedProfessorName.isEmpty()) {
+                // Update the class information
+                classesList.get(position).setClassName(editedClassName);
+                classesList.get(position).setProfessor(editedProfessorName);
+                classesList.get(position).setStartTime(editedStartTime);
+                classesList.get(position).setEndTime(editedEndTime);
 
                 // Save tasks to SharedPreferences
                 saveTasksToPrefs();

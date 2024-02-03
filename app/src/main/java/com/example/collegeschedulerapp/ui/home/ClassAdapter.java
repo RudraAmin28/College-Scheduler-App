@@ -55,9 +55,14 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Classes classy = classesList.get(position);
-        holder.classTextView.setText(classy.getclassName());
+        holder.classTextView.setText(classy.getClassName());
         holder.professorTextView.setText(classy.getProfessor());
+
+        // Displaying the start and end times
+        String timeRange = classy.getStartTime() + " - " + classy.getEndTime();
+        holder.ClassTimeTextView.setText(timeRange);
     }
+
 
     @Override
     public int getItemCount() {
@@ -67,11 +72,13 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView classTextView;
         public TextView professorTextView;
+        public TextView ClassTimeTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             classTextView = itemView.findViewById(R.id.classNameTextView);
             professorTextView = itemView.findViewById(R.id.ClassInstructorTextView);
+            ClassTimeTextView = itemView.findViewById(R.id.ClassTimeTextView);
 
             Button buttonEdit = itemView.findViewById(R.id.editClass);
             buttonEdit.setOnClickListener(v -> {
