@@ -1,0 +1,43 @@
+<!-- res/layout/fragment_classwork.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Name input field -->
+    <EditText
+        android:id="@+id/editClassworkTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Classwork Title"/>
+
+
+    <!-- Type of classwork dropdown -->
+    <Spinner
+        android:id="@+id/spinnerClassworkType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editClassworkTitle"
+        android:hint="Select Classwork Type"
+        android:layout_marginTop="16dp"
+        android:entries="@array/classwork_types" />
+
+    <!-- Class dropdown -->
+    <Spinner
+        android:id="@+id/spinnerClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerClassworkType"
+        android:layout_marginTop="16dp"
+        android:entries="@array/class_types" />
+
+    <!-- Due date calendar -->
+    <DatePicker
+        android:id="@+id/datePickerDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerClass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+</RelativeLayout>
