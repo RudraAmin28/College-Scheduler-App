@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp.ui.home;
+package com.example.collegeschedulerapp.ui.Classes;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp.ui.notifications;
+package com.example.collegeschedulerapp.ui.ToDo;
 
 import android.app.AlertDialog;
 import android.os.Bundle;

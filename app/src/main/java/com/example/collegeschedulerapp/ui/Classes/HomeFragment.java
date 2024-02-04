@@ -1,4 +1,4 @@
-package com.example.collegeschedulerapp.ui.home;
+package com.example.collegeschedulerapp.ui.Classes;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
@@ -23,10 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegeschedulerapp.R;
 import com.example.collegeschedulerapp.databinding.FragmentHomeBinding;
-import com.example.collegeschedulerapp.databinding.FragmentNotificationsBinding;
-import com.example.collegeschedulerapp.ui.notifications.NotificationsViewModel;
-import com.example.collegeschedulerapp.ui.notifications.Task;
-import com.example.collegeschedulerapp.ui.notifications.TaskAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
