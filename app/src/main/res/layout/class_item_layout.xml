@@ -75,8 +75,6 @@
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
             android:background="@android:drawable/ic_delete"
-            android:backgroundTint="#FF0000"
-            android:textColor="#FF0000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/editClass"

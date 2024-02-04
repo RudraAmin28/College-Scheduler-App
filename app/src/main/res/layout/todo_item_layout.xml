@@ -6,7 +6,7 @@
     android:layout_height="50dp"
     android:layout_margin="5dp"
     android:elevation="10dp"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -18,6 +18,8 @@
             android:id="@+id/checkBoxTODO"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:textColorHighlight="#4CAF50"
+            android:textColorLink="#4CAF50"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/todoTitle"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +29,11 @@
             android:id="@+id/todoTitle"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:gravity="center"
+            android:gravity="center|start"
             android:text="A PLACEHOLDER TODO ITEM"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/editTODO"
             app:layout_constraintStart_toEndOf="@+id/checkBoxTODO"
@@ -51,8 +56,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="8dp"
             android:background="@android:drawable/ic_delete"
-            android:backgroundTint="#FF0000"
-            android:textColor="#FF0000"
+            android:tint="#FF0000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/editTODO"
