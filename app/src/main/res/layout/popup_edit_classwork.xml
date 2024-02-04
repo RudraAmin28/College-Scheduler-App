@@ -1,4 +1,4 @@
-<!-- res/layout/popup_add_classwork.xml -->
+<!-- res/layout/popup_edit_classwork.xml -->
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,44 +18,45 @@
 
     <!-- Type of classwork dropdown -->
     <Spinner
-        android:id="@+id/spinnerClassworkType"
+        android:id="@+id/spinnerEditClassworkType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Select Classwork Type"
         android:layout_marginBottom="8dp"
         android:entries="@array/classwork_types"/>
 
+    <!-- Class dropdown -->
     <Spinner
-        android:id="@+id/spinnerClass"
+        android:id="@+id/spinnerEditClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Select Class"
         android:layout_marginBottom="8dp"
+        android:hint="Select Class"
         android:entries="@array/class_types"/>
-    <!-- Class dropdown -->
 
     <!-- Due date calendar -->
     <DatePicker
-        android:id="@+id/datePickerDueDate"
+        android:id="@+id/datePickerEditDueDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"/>
+
     <!-- Buttons -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Add button -->
+        <!-- Update button -->
         <Button
-            android:id="@+id/buttonAddClass"
+            android:id="@+id/buttonUpdateClasswork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:text="Add Classwork" />
+            android:text="Update Classwork" />
 
         <!-- Cancel button -->
         <Button
-            android:id="@+id/buttonCancelClasswork"
+            android:id="@+id/buttonCancelEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"

@@ -9,7 +9,7 @@ public class Classwork {
 
     // Constructors, getters, and setters
 
-    public Classwork(String name, String classworkType, long dueDateInMillis, String associatedClass) {
+    public Classwork(String name, String classworkType, String associatedClass, long dueDateInMillis) {
         this.name = name;
         this.classworkType = classworkType;
         this.dueDateInMillis = dueDateInMillis;
