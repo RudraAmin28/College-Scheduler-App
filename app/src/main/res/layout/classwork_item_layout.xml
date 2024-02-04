@@ -52,23 +52,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Placeholder type" />
+                android:text="Placeholder type"
+                android:textSize="18sp" />
 
             <!-- Display the associated class -->
             <TextView
                 android:id="@+id/textViewClass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Placeholder class" />
+                android:layout_marginTop="0dp"
+                android:text="Placeholder class"
+                android:textSize="18sp" />
 
             <!-- Display the due date -->
             <TextView
                 android:id="@+id/textViewDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Placeholder due date" />
+                android:layout_marginTop="0dp"
+                android:text="Placeholder due date"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

@@ -295,6 +295,12 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         selectedStartTime.setText(classesList.get(position).getStartTime());
         selectedEndTime.setText(classesList.get(position).getEndTime());
 
+        addClassNameTextView.setText(classesList.get(position).getClassName());
+        addClassProfessorTextView.setText(classesList.get(position).getProfessor());
+        selectedStartTime.setText(classesList.get(position).getStartTime());
+        selectedEndTime.setText(classesList.get(position).getEndTime());
+
+
         CheckBox mondayCheckBox = dialogView.findViewById(R.id.mondayCheckBox);
         CheckBox tuesdayCheckBox = dialogView.findViewById(R.id.tuesdayCheckBox);
         CheckBox wednesdayCheckBox = dialogView.findViewById(R.id.wednesdayCheckBox);
@@ -302,6 +308,16 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         CheckBox fridayCheckBox = dialogView.findViewById(R.id.fridayCheckBox);
         CheckBox saturdayCheckBox = dialogView.findViewById(R.id.saturdayCheckBox);
         CheckBox sundayCheckBox = dialogView.findViewById(R.id.sundayCheckBox);
+
+        List<String> originalSelectedDays = classesList.get(position).getSelectedDays();
+
+        mondayCheckBox.setChecked(originalSelectedDays.contains("Mon"));
+        tuesdayCheckBox.setChecked(originalSelectedDays.contains("Tue"));
+        wednesdayCheckBox.setChecked(originalSelectedDays.contains("Wed"));
+        thursdayCheckBox.setChecked(originalSelectedDays.contains("Thu"));
+        fridayCheckBox.setChecked(originalSelectedDays.contains("Fri"));
+        saturdayCheckBox.setChecked(originalSelectedDays.contains("Sat"));
+        sundayCheckBox.setChecked(originalSelectedDays.contains("Sun"));
 
 
         buttonAddClass.setOnClickListener(v -> {
