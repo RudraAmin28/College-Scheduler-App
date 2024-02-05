@@ -33,6 +33,14 @@
         android:layout_marginBottom="8dp"
         android:hint="Select Class" />
 
+
+    <EditText
+        android:id="@+id/editClassworkLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Classwork Location"
+        android:layout_marginBottom="8dp"/>
+
     <!-- Due date calendar -->
     <DatePicker
         android:id="@+id/datePickerEditDueDate"

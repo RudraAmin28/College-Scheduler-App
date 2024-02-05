@@ -57,6 +57,7 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
         private TextView textViewDueDate;
         private Button editButton;
         private Button deleteButton;
+        private TextView locationTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +67,7 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
             textViewDueDate = itemView.findViewById(R.id.textViewDueDate);
             editButton = itemView.findViewById(R.id.editClasswork);
             deleteButton = itemView.findViewById(R.id.deleteClasswork);
+            locationTextView = itemView.findViewById(R.id.LocationTextView);
 
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,6 +99,7 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
             textViewType.setText("Classwork Type: " + classwork.getClassworkType());
             textViewClass.setText("Class: " + classwork.getAssociatedClass());
             textViewDueDate.setText("Due Date: " + formatDate(classwork.getDueDateInMillis()));
+            locationTextView.setText("Location: " + classwork.getLocation());
         }
 
         private String formatDate(long millis) {

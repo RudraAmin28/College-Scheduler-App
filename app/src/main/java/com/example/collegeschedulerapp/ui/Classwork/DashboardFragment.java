@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.collegeschedulerapp.R;
 import com.example.collegeschedulerapp.ui.Classes.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +67,6 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         return view;
     }
 
-    String[] strings = new String[4];
     private void showAddClassworkDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.popup_add_classwork, null);
@@ -78,6 +78,9 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         DatePicker datePicker = view.findViewById(R.id.datePickerDueDate);
         Button buttonAddClass = view.findViewById(R.id.buttonAddClass);
         Button buttonCancelClasswork = view.findViewById(R.id.buttonCancelClasswork);
+
+        EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
+
 
         // Set up ArrayAdapter for the Classwork Type Spinner
         String[] classesArr = new String[HomeFragment.returnClassList().size()];
@@ -103,7 +106,8 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
                 long dueDateInMillis = getDueDateInMillis(datePicker);
 
                 // Create a new Classwork object
-                Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis);
+                String location = editTextLocation.getText().toString();
+                Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis, location);
 
                 // Add the new classwork item to the list (assuming classworkList is accessible)
                 classworkList.add(newClasswork);
@@ -140,9 +144,11 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         DatePicker datePicker = view.findViewById(R.id.datePickerEditDueDate);
         Button buttonUpdateClasswork = view.findViewById(R.id.buttonUpdateClasswork);
         Button buttonCancelEdit = view.findViewById(R.id.buttonCancelEdit);
+        EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
 
         // Set initial values based on the provided Classwork object
         editTextTitle.setText(classwork.getName());
+        editTextLocation.setText(classwork.getLocation());
 
         // Set the initial value for the Classwork Type Spinner
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(requireContext(),
@@ -178,12 +184,14 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
             @Override
             public void onClick(View v) {
                 String title = editTextTitle.getText().toString();
+                String location = editTextLocation.getText().toString();
                 String type = spinnerType.getSelectedItem().toString();
                 String classes = spinnerClass.getSelectedItem().toString();
                 long dueDateInMillis = getDueDateInMillis(datePicker);
 
                 // Update the Classwork object
                 classwork.setName(title);
+                classwork.setLocation(location);
                 classwork.setClassworkType(type);
                 classwork.setAssociatedClass(classes);
                 classwork.setDueDateInMillis(dueDateInMillis);
@@ -223,12 +231,14 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        // Convert classworkList to a JSON string (you may need to implement a method to convert your data to a string)
+        // Convert classworkList to a JSON string
         String classworkData = convertClassworkListToString(classworkList);
 
         editor.putString("classworkData", classworkData);
         editor.apply();
+        System.out.println("saved");
     }
+
 
     private String convertClassworkListToString(List<Classwork> classworkList) {
         // Implement your logic to convert classworkList to a JSON string
@@ -238,7 +248,7 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
 
         StringBuilder stringBuilder = new StringBuilder();
         for (Classwork classwork : classworkList) {
-            stringBuilder.append(classwork.getName()).append(",").append(classwork.getClassworkType()).append(",").append(classwork.getAssociatedClass()).append(",").append(classwork.getDueDateInMillis()).append(";");
+            stringBuilder.append(classwork.getName()).append(",").append(classwork.getClassworkType()).append(",").append(classwork.getAssociatedClass()).append(",").append(classwork.getDueDateInMillis()).append(",").append(classwork.getLocation()).append(";");
         }
         return stringBuilder.toString();
     }
@@ -257,26 +267,24 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
     }
 
     private List<Classwork> convertStringToClassworkList(String classworkData) {
-        // Implement your logic to convert the saved string back to a list of Classwork objects
-        // You need to handle the deserialization process
-        // For simplicity, you can use a basic approach like splitting the string and creating objects
-
         List<Classwork> classworkList = new ArrayList<>();
         String[] classworkArray = classworkData.split(";");
         for (String classworkString : classworkArray) {
             String[] classworkValues = classworkString.split(",");
-            if (classworkValues.length == 4) {
+            if (classworkValues.length == 5) { // Adjust the length to match the number of fields including location
                 String title = classworkValues[0];
                 String type = classworkValues[1];
                 String associatedClass = classworkValues[2];
                 long dueDateInMillis = Long.parseLong(classworkValues[3]);
+                String location = classworkValues[4]; // Add the location field
 
-                Classwork classwork = new Classwork(title, type, associatedClass, dueDateInMillis);
+                Classwork classwork = new Classwork(title, type, associatedClass, dueDateInMillis, location);
                 classworkList.add(classwork);
             }
         }
         return classworkList;
     }
+
 
     private long getDueDateInMillis(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();

@@ -73,6 +73,13 @@
                 android:text="Placeholder due date"
                 android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/LocationTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Placeholder Location"
+                android:textSize="18sp" />
+
         </LinearLayout>
 
         <Button
