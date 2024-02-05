@@ -2,5 +2,5 @@
     <string name="app_name">College Scheduler App</string>
     <string name="title_classes">Classes</string>
     <string name="title_classwork">Classwork</string>
-    <string name="title_todo">To-Do</string>
+    <string name="title_todo">Tasks</string>
 </resources>

@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegeschedulerapp.R;
-import com.example.collegeschedulerapp.ui.Classes.HomeFragment;
+import com.example.collegeschedulerapp.ui.Classes.ClassesFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.List;
 
 // Inside DashboardFragment.java
 
-public class DashboardFragment extends Fragment implements ClassworkAdapter.OnClassworkEditListener {
+public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnClassworkEditListener {
 
     private RecyclerView recyclerViewClasswork;
     private FloatingActionButton floatingActionButtonClasswork;
@@ -82,9 +82,9 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
 
 
         // Set up ArrayAdapter for the Classwork Type Spinner
-        String[] classesArr = new String[HomeFragment.returnClassList().size()];
-        for (int i = 0; i < HomeFragment.returnClassList().size(); i++) {
-            classesArr[i] = HomeFragment.returnClassList().get(i).getClassName();
+        String[] classesArr = new String[ClassesFragment.returnClassList().size()];
+        for (int i = 0; i < ClassesFragment.returnClassList().size(); i++) {
+            classesArr[i] = ClassesFragment.returnClassList().get(i).getClassName();
         }
 
         ArrayAdapter<String> classAdapter = new ArrayAdapter<>(requireContext(),
@@ -158,9 +158,9 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         spinnerType.setSelection(typePosition);
 
         // Set the initial value for the Class Spinner (Assuming you have a list of classes)
-        String[] classesArr = new String[HomeFragment.returnClassList().size()];
-        for (int i = 0; i < HomeFragment.returnClassList().size(); i++) {
-            classesArr[i] = HomeFragment.returnClassList().get(i).getClassName();
+        String[] classesArr = new String[ClassesFragment.returnClassList().size()];
+        for (int i = 0; i < ClassesFragment.returnClassList().size(); i++) {
+            classesArr[i] = ClassesFragment.returnClassList().get(i).getClassName();
         }
 
         ArrayAdapter<String> classAdapter = new ArrayAdapter<>(requireContext(),

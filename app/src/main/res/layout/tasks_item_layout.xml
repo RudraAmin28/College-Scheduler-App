@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center|start"
-            android:text="A PLACEHOLDER TODO ITEM"
+            android:text="A PLACEHOLDER TASK ITEM"
             android:textAllCaps="false"
             android:textSize="18sp"
             android:textStyle="bold"
