@@ -96,7 +96,7 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
         public void bind(Classwork classwork) {
             // Bind data to the TextViews
             textViewTitle.setText(classwork.getName());
-            textViewType.setText("Classwork Type: " + classwork.getClassworkType());
+            textViewType.setText("Type: " + classwork.getClassworkType());
             textViewClass.setText("Class: " + classwork.getAssociatedClass());
             textViewDueDate.setText("Due Date: " + formatDate(classwork.getDueDateInMillis()));
             locationTextView.setText("Location: " + classwork.getLocation());
