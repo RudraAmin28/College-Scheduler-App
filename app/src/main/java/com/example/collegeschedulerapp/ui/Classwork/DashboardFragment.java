@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.collegeschedulerapp.R;
 import com.example.collegeschedulerapp.ui.Classes.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
