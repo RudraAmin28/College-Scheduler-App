@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="7dp"
     android:elevation="10dp"
     app:cardCornerRadius="20dp">
 
@@ -51,7 +51,7 @@
                 android:id="@+id/textViewClassworkType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="Placeholder type"
                 android:textSize="18sp" />
 
@@ -81,9 +81,9 @@
             android:layout_height="30dp"
             android:background="@android:drawable/ic_menu_edit"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deleteClasswork"
-            app:layout_constraintStart_toEndOf="@+id/classworkDetails"/>
+            app:layout_constraintStart_toEndOf="@+id/classworkDetails"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/deleteClasswork"
