@@ -154,11 +154,11 @@
 
         <TextView
             android:id="@+id/labelStartTime"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="Start time: "
             android:textColor="@color/black"
-            android:layout_centerVertical="true"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -188,11 +188,11 @@
 
         <TextView
             android:id="@+id/labelEndTime"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="End time: "
             android:textColor="@color/black"
-            android:layout_centerVertical="true"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -230,7 +230,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:text="Add Class" />
+            android:text="Add" />
 
         <Button
             android:id="@+id/buttonCancelClass"
