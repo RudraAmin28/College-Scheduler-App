@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ import java.util.Locale;
 public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButtonClickListener, ClassAdapter.OnEditButtonClickListener {
 
     private FragmentHomeBinding binding;
-    private List<Classes> classesList;
+    private static ArrayList<Classes> classesList;
     private ClassAdapter classesAdapter;
 
     private static final String PREFS_NAME = "ClassesPrefs";
@@ -373,5 +372,8 @@ public class HomeFragment extends Fragment implements ClassAdapter.OnDeleteButto
         dialog.show();
     }
 
+    public static ArrayList<Classes> returnClassList() {
+        return classesList;
+    }
 
 }

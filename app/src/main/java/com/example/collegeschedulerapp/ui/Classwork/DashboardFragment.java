@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegeschedulerapp.R;
+import com.example.collegeschedulerapp.ui.Classes.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         return view;
     }
 
+    String[] strings = new String[4];
     private void showAddClassworkDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.popup_add_classwork, null);
@@ -76,6 +78,17 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         DatePicker datePicker = view.findViewById(R.id.datePickerDueDate);
         Button buttonAddClass = view.findViewById(R.id.buttonAddClass);
         Button buttonCancelClasswork = view.findViewById(R.id.buttonCancelClasswork);
+
+        // Set up ArrayAdapter for the Classwork Type Spinner
+        String[] classesArr = new String[HomeFragment.returnClassList().size()];
+        for (int i = 0; i < HomeFragment.returnClassList().size(); i++) {
+            classesArr[i] = HomeFragment.returnClassList().get(i).getClassName();
+        }
+
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_spinner_item, classesArr);
+        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerClass.setAdapter(classAdapter);
 
         builder.setView(view);
         AlertDialog dialog = builder.create();
@@ -140,8 +153,13 @@ public class DashboardFragment extends Fragment implements ClassworkAdapter.OnCl
         spinnerType.setSelection(typePosition);
 
         // Set the initial value for the Class Spinner (Assuming you have a list of classes)
-        ArrayAdapter<CharSequence> classAdapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.class_types, android.R.layout.simple_spinner_item);
+        String[] classesArr = new String[HomeFragment.returnClassList().size()];
+        for (int i = 0; i < HomeFragment.returnClassList().size(); i++) {
+            classesArr[i] = HomeFragment.returnClassList().get(i).getClassName();
+        }
+
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_spinner_item, classesArr);
         classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerClass.setAdapter(classAdapter);
         int classPosition = classAdapter.getPosition(classwork.getAssociatedClass());
