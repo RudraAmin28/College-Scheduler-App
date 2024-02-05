@@ -32,6 +32,7 @@
         android:clickable="true"
         android:contentDescription="Add Item"
         android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="#93A7D1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

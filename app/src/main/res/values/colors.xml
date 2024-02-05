@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#407088</color>
-    <color name="purple_500">#407088</color>
-    <color name="purple_700">#407088</color>
-    <color name="teal_200">#4CAF50</color>
-    <color name="teal_700">#8BC34A</color>
+    <color name="purple_200">#7682B7</color>
+    <color name="purple_500">#7682B7</color>
+    <color name="purple_700">#7682B7</color>
+    <color name="teal_200">#7682B7</color>
+    <color name="teal_700">#7682B7</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="eventList">#dcd6f7</color>"
+    <color name="topBackground">#a6b1e1</color>
 </resources>
