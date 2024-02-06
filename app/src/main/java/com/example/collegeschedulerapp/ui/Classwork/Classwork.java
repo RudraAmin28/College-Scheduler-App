@@ -8,13 +8,24 @@ public class Classwork {
     private String associatedClass;
     private String location;
 
+    public String getTime() {
+        return time;
+    }
 
-    public Classwork(String name, String classworkType, String associatedClass, long dueDateInMillis, String location) {
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    private String time;
+
+
+    public Classwork(String name, String classworkType, String associatedClass, long dueDateInMillis, String location, String time) {
         this.name = name;
         this.classworkType = classworkType;
         this.dueDateInMillis = dueDateInMillis;
         this.associatedClass = associatedClass;
         this.location = location;
+        this.time = time;
     }
 
     public String getLocation() {
