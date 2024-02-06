@@ -107,11 +107,7 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
             textViewType.setText("Type: " + classwork.getClassworkType());
             textViewClass.setText("Class: " + classwork.getAssociatedClass());
             textViewDueDate.setText("Due Date: " + formatDate(classwork.getDueDateInMillis()));
-            if (classwork.getLocation().isEmpty()) {
-                locationTextView.setText("Location: N/A");
-            } else {
-                locationTextView.setText("Location: " + classwork.getLocation());
-            }
+            locationTextView.setText("Location: " + classwork.getLocation());
 
         }
 

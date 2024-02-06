@@ -166,6 +166,9 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 String classes = spinnerClass.getSelectedItem().toString();
                 long dueDateInMillis = getDueDateInMillis(datePicker);
                 String location = editTextLocation.getText().toString();
+                if (editTextLocation.getText().toString().isEmpty()) {
+                    location = "N/A";
+                }
 
                 // Create a new Classwork object
                 Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis, location);
@@ -255,17 +258,21 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
             @Override
             public void onClick(View v) {
                 String title = editTextTitle.getText().toString();
-                String location = editTextLocation.getText().toString();
                 String type = spinnerType.getSelectedItem().toString();
                 String classes = spinnerClass.getSelectedItem().toString();
                 long dueDateInMillis = getDueDateInMillis(datePicker);
+                String location = editTextLocation.getText().toString();
+                if (editTextLocation.getText().toString().isEmpty()) {
+                    location = "N/A";
+                }
 
                 // Update the Classwork object
                 classwork.setName(title);
-                classwork.setLocation(location);
                 classwork.setClassworkType(type);
                 classwork.setAssociatedClass(classes);
                 classwork.setDueDateInMillis(dueDateInMillis);
+                classwork.setLocation(location);
+
 
                 sortClassworkList(sortBy);
 
