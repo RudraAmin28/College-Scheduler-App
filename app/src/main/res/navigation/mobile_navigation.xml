@@ -9,17 +9,17 @@
         android:id="@+id/navigation_classes"
         android:name="com.example.collegeschedulerapp.ui.Classes.ClassesFragment"
         android:label="@string/title_classes"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_classes" />
 
     <fragment
         android:id="@+id/navigation_classwork"
         android:name="com.example.collegeschedulerapp.ui.Classwork.ClassworkFragment"
         android:label="@string/title_classwork"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_classwork" />
 
     <fragment
         android:id="@+id/navigation_tasks"
         android:name="com.example.collegeschedulerapp.ui.ToDo.TaskFragment"
         android:label="@string/title_todo"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_tasks" />
 </navigation>

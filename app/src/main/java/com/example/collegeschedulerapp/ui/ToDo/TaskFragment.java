@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegeschedulerapp.R;
-import com.example.collegeschedulerapp.databinding.FragmentNotificationsBinding;
+import com.example.collegeschedulerapp.databinding.FragmentTasksBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class TaskFragment extends Fragment implements TaskAdapter.OnDeleteButtonClickListener, TaskAdapter.OnCheckedChangeListener, TaskAdapter.OnEditButtonClickListener {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentTasksBinding binding;
     private List<Task> taskList;
     private TaskAdapter taskAdapter;
 
@@ -37,7 +37,7 @@ public class TaskFragment extends Fragment implements TaskAdapter.OnDeleteButton
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentTasksBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         taskList = new ArrayList<>();

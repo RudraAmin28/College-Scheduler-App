@@ -45,7 +45,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_classwork, container, false);
 
         recyclerViewClasswork = view.findViewById(R.id.recyclerViewClasswork);
         floatingActionButtonClasswork = view.findViewById(R.id.floatingActionButtonClasswork);

@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.collegeschedulerapp.R;
-import com.example.collegeschedulerapp.databinding.FragmentHomeBinding;
+import com.example.collegeschedulerapp.databinding.FragmentClassesBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,7 +31,7 @@ import java.util.Locale;
 
 public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteButtonClickListener, ClassAdapter.OnEditButtonClickListener {
 
-    private FragmentHomeBinding binding;
+    private FragmentClassesBinding binding;
     private static ArrayList<Classes> classesList;
     private ClassAdapter classesAdapter;
     private static final String PREFS_NAME = "ClassesPrefs";
@@ -42,7 +42,7 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentClassesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         classesList = new ArrayList<>();
