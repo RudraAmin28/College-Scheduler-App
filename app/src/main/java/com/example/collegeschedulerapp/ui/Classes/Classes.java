@@ -42,7 +42,6 @@ public class Classes {
         this.selectedDays = selectedDays;
     }
 
-    // ... other methods and getters
 
     public String getStartTime() {
         return startTime;

@@ -34,7 +34,6 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
     private FragmentHomeBinding binding;
     private static ArrayList<Classes> classesList;
     private ClassAdapter classesAdapter;
-
     private static final String PREFS_NAME = "ClassesPrefs";
     private static final String KEY_TASK_LIST = "ClassesList";
 
@@ -46,37 +45,25 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Initialize the task list and adapter
         classesList = new ArrayList<>();
         classesAdapter = new ClassAdapter(classesList);
 
-        // Find the RecyclerView in the fragment layout
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewClasses);
 
-        // Set up the RecyclerView with a LinearLayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        // Set the adapter for the RecyclerView
         classesAdapter.setOnDeleteButtonClickListener(this);
         recyclerView.setAdapter(classesAdapter);
 
         loadTasksFromPrefs();
 
-        // Add sample tasks
-
-
-        // Notify the adapter that the data set has changed
         classesAdapter.notifyDataSetChanged();
 
-        // Find the FloatingActionButton in the fragment layout
         com.google.android.material.floatingactionbutton.FloatingActionButton fab =
                 root.findViewById(R.id.floatingActionButtonClasses);
 
-        // Set click listener for the FloatingActionButton
         fab.setOnClickListener(view -> showAddTaskDialog());
         classesAdapter.setOnEditButtonClickListener(this);
-
-
 
         return root;
     }
@@ -86,11 +73,7 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
         // Remove the task at the clicked position
         if (position >= 0 && position < classesList.size()) {
             classesList.remove(position);
-
-            // Save tasks to SharedPreferences
             saveTasksToPrefs();
-
-            // Notify the adapter that the data set has changed
             classesAdapter.notifyDataSetChanged();
         }
     }
@@ -117,10 +100,9 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
                         textView.setText(formattedTime);
                     }
                 },
-                // Set the default time to 12:00 AM
                 0,
                 0,
-                false // Set to false to use 12-hour format
+                false
         );
 
         timePickerDialog.show();
@@ -157,13 +139,11 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
 
 
     private void showAddTaskDialog() {
-        // Create the AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = getLayoutInflater().inflate(R.layout.popup_add_class, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
 
-        // Find views in the dialog layout
         EditText addClassNameTextView = dialogView.findViewById(R.id.addClassNameTextView);
         EditText addClassProfessorTextView = dialogView.findViewById(R.id.addClassProfessorTextView);
         Button buttonAddClass = dialogView.findViewById(R.id.buttonAddClass);
@@ -189,17 +169,13 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
             List<String> selectedDays = getSelectedDays(mondayCheckBox, tuesdayCheckBox, wednesdayCheckBox, thursdayCheckBox, fridayCheckBox, saturdayCheckBox, sundayCheckBox);
 
             if (!className.isEmpty() && !professorName.isEmpty() && selectedDays != null) {
-                // Add the new class to the list
                 Classes newClass = new Classes(className, professorName, selectedStartTime.getText().toString(), selectedEndTime.getText().toString(), selectedDays);
                 classesList.add(newClass);
 
-                // Save classes to SharedPreferences
                 saveTasksToPrefs();
 
-                // Notify the adapter that the data set has changed
                 classesAdapter.notifyDataSetChanged();
 
-                // Dismiss the dialog
                 dialog.dismiss();
             }
         });
@@ -219,10 +195,8 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
             }
         });
 
-        // Set click listener for the "Cancel" button
         buttonCancelClass.setOnClickListener(v -> dialog.dismiss());
 
-        // Show the dialog
         dialog.show();
     }
 
@@ -231,7 +205,6 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
         String tasksJson = prefs.getString(KEY_TASK_LIST, null);
 
         if (tasksJson != null) {
-            // Convert JSON string to List<Task>
             Type listType = new TypeToken<List<Classes>>() {}.getType();
             List<Classes> loadedTasks = new Gson().fromJson(tasksJson, listType);
 
@@ -245,7 +218,6 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
         SharedPreferences prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        // Convert List<Task> to JSON string
         String tasksJson = new Gson().toJson(classesList);
 
         // Save tasks to SharedPreferences
@@ -269,13 +241,11 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
 
 
     private void showEditTaskDialog(int position) {
-        // Create the AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View dialogView = getLayoutInflater().inflate(R.layout.popup_edit_class, null);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
 
-        // Find views in the dialog layout
         EditText addClassNameTextView = dialogView.findViewById(R.id.addClassNameTextView);
         EditText addClassProfessorTextView = dialogView.findViewById(R.id.addClassProfessorTextView);
         Button buttonAddClass = dialogView.findViewById(R.id.buttonAddClass);
@@ -287,7 +257,6 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
         TextView selectedStartTime = dialogView.findViewById(R.id.selectedStartTime);
         TextView selectedEndTime = dialogView.findViewById(R.id.selectedEndTime);
 
-        // Set the current task title, professor, start time, and end time in the edit text and text views
         addClassNameTextView.setText(classesList.get(position).getClassName());
         addClassProfessorTextView.setText(classesList.get(position).getProfessor());
         selectedStartTime.setText(classesList.get(position).getStartTime());
@@ -325,22 +294,15 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
             String editedEndTime = selectedEndTime.getText().toString();
             List<String> editedSelectedDays = getSelectedDays(mondayCheckBox, tuesdayCheckBox, wednesdayCheckBox, thursdayCheckBox, fridayCheckBox, saturdayCheckBox, sundayCheckBox);
 
-            // Check if any of the essential fields are empty or days are null
             if (!editedClassName.isEmpty() && !editedProfessorName.isEmpty() && editedStartTime != null && editedEndTime != null && editedSelectedDays != null) {
-                // Update the class information
                 classesList.get(position).setClassName(editedClassName);
                 classesList.get(position).setProfessor(editedProfessorName);
                 classesList.get(position).setStartTime(editedStartTime);
                 classesList.get(position).setEndTime(editedEndTime);
                 classesList.get(position).setSelectedDays(editedSelectedDays);
 
-                // Save classes to SharedPreferences
                 saveTasksToPrefs();
-
-                // Notify the adapter that the data set has changed
                 classesAdapter.notifyDataSetChanged();
-
-                // Dismiss the dialog
                 dialog.dismiss();
             }
         });
@@ -361,11 +323,7 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
             }
         });
 
-
-        // Set click listener for the "Cancel" button
         buttonCancelClass.setOnClickListener(v -> dialog.dismiss());
-
-        // Show the dialog
         dialog.show();
     }
 

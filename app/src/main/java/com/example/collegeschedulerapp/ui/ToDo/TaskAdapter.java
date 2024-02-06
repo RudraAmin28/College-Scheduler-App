@@ -79,11 +79,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             holder.categoryTextView.setText("Category: " + task.getCategory());
         }
 
-        // Set the checkbox state without triggering the listener
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(task.isChecked());
 
-        // Set click listener for the checkbox
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (onCheckedChangeListener != null) {
                 onCheckedChangeListener.onCheckboxChanged(position, isChecked);
@@ -122,7 +120,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 }
             });
 
-            // Set click listener for the checkbox
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (onCheckedChangeListener != null) {
                     onCheckedChangeListener.onCheckboxChanged(getAdapterPosition(), isChecked);

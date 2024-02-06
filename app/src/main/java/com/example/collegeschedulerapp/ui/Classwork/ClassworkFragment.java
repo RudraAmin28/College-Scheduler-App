@@ -30,7 +30,6 @@ import java.util.Comparator;
 import java.util.List;
 
 
-// Inside DashboardFragment.java
 
 public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnClassworkEditListener {
 
@@ -53,11 +52,9 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         classworkAdapter = new ClassworkAdapter(requireContext(), classworkList);
         classworkAdapter.setOnClassworkEditListener(this);
 
-        // Set up RecyclerView
         recyclerViewClasswork.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerViewClasswork.setAdapter(classworkAdapter);
 
-        // Initialize the spinner
         spinner = view.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -72,11 +69,9 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
             }
         });
 
-        // Set up FloatingActionButton click listener
         floatingActionButtonClasswork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Access the selected item position from the spinner
                 int sortBy = spinner.getSelectedItemPosition();
                 showAddClassworkDialog(sortBy);
             }
@@ -98,7 +93,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
     private void sortClassworkList(int sortBy) {
         // Sort the classworkList based on the selected option
         switch (sortBy) {
-            case 1: // Sort by class
+            case 1:
                 Collections.sort(classworkList, new Comparator<Classwork>() {
                     @Override
                     public int compare(Classwork c1, Classwork c2) {
@@ -106,7 +101,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                     }
                 });
                 break;
-            case 0: // Sort by due date
+            case 0:
                 Collections.sort(classworkList, new Comparator<Classwork>() {
                     @Override
                     public int compare(Classwork c1, Classwork c2) {
@@ -118,7 +113,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 break;
         }
 
-        // Notify the adapter of the changes in the dataset
         classworkAdapter.notifyDataSetChanged();
     }
 
@@ -126,7 +120,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.popup_add_classwork, null);
 
-        // Get references to the views in the layout
         EditText editTextTitle = view.findViewById(R.id.editClassworkTitle);
         Spinner spinnerType = view.findViewById(R.id.spinnerClassworkType);
         Spinner spinnerClass = view.findViewById(R.id.spinnerClass);
@@ -135,13 +128,11 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         Button buttonAddClasswork = view.findViewById(R.id.buttonAddClasswork);
         Button buttonCancelClasswork = view.findViewById(R.id.buttonCancelClasswork);
 
-        // Set up ArrayAdapter for the Classwork Type Spinner
         String[] classesArr = new String[ClassesFragment.returnClassList().size()];
         for (int i = 0; i < ClassesFragment.returnClassList().size(); i++) {
             classesArr[i] = ClassesFragment.returnClassList().get(i).getClassName();
         }
 
-// Sort the classesArr array
         Arrays.sort(classesArr, new Comparator<String>() {
             @Override
             public int compare(String c1, String c2) {
@@ -170,22 +161,11 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                     location = "N/A";
                 }
 
-                // Create a new Classwork object
                 Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis, location);
-
-                // Add the new classwork item to the list
                 classworkList.add(newClasswork);
-
-                // Sort the classworkList based on the selected option
                 sortClassworkList(sortBy);
-
-                // Notify the adapter that data has changed
                 classworkAdapter.notifyDataSetChanged();
-
-                // Save classwork data to SharedPreferences after adding
                 saveClassworkToPrefs();
-
-                // Dismiss the dialog after adding
                 dialog.dismiss();
             }
         });
@@ -193,7 +173,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         buttonCancelClasswork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Dismiss the dialog on cancel
                 dialog.dismiss();
             }
         });
@@ -213,11 +192,9 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         Button buttonCancelEdit = view.findViewById(R.id.buttonCancelEdit);
         EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
 
-        // Set initial values based on the provided Classwork object
         editTextTitle.setText(classwork.getName());
         editTextLocation.setText(classwork.getLocation());
 
-        // Set the initial value for the Classwork Type Spinner
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(requireContext(),
                 R.array.classwork_types, android.R.layout.simple_spinner_item);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -246,7 +223,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         spinnerClass.setSelection(classPosition);
 
 
-        // Set the initial value for the Due Date DatePicker
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(classwork.getDueDateInMillis());
         datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -282,10 +258,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                     classworkAdapter.notifyItemChanged(position);
                 }
 
-                // Save classwork data to SharedPreferences after updating
                 saveClassworkToPrefs();
-
-                // Dismiss the dialog
                 dialog.dismiss();
             }
         });
@@ -293,7 +266,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         buttonCancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Dismiss the dialog on cancel
                 dialog.dismiss();
             }
         });
@@ -303,20 +275,14 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
 
     @Override
     public void onEditClasswork(Classwork classwork) {
-        // Handle the edit action for the classwork
         int sortBy = spinner.getSelectedItemPosition();// Assuming you have a spinner for sorting
         showEditClassworkDialog(classwork, sortBy);
     }
 
     private void deleteClasswork(int position) {
         if (position >= 0 && position < classworkList.size()) {
-            // Remove classwork from the list
             classworkList.remove(position);
-
-            // Save the updated classwork list
             saveClassworkToPrefs();
-
-            // Notify the adapter about the removal
             classworkAdapter.notifyItemRemoved(position);
         }
     }
@@ -325,7 +291,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        // Convert classworkList to a JSON string
         String classworkData = convertClassworkListToString(classworkList);
 
         editor.putString("classworkData", classworkData);
@@ -334,10 +299,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
 
 
     private String convertClassworkListToString(List<Classwork> classworkList) {
-        // Implement your logic to convert classworkList to a JSON string
-        // You can use Gson library or any other method to serialize the data
-        // For simplicity, you can use a basic approach like concatenating values into a string
-        // Remember to handle any exceptions appropriately
 
         StringBuilder stringBuilder = new StringBuilder();
         for (Classwork classwork : classworkList) {
@@ -350,10 +311,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         SharedPreferences prefs = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String classworkData = prefs.getString("classworkData", "");
 
-        // Convert the JSON string back to a list of Classwork objects
         List<Classwork> loadedClassworkList = convertStringToClassworkList(classworkData);
-
-        // Update your classworkList with the loaded data
         classworkList.clear();
         classworkList.addAll(loadedClassworkList);
         classworkAdapter.notifyDataSetChanged();
@@ -364,12 +322,12 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         String[] classworkArray = classworkData.split(";");
         for (String classworkString : classworkArray) {
             String[] classworkValues = classworkString.split(",");
-            if (classworkValues.length == 5) { // Adjust the length to match the number of fields including location
+            if (classworkValues.length == 5) {
                 String title = classworkValues[0];
                 String type = classworkValues[1];
                 String associatedClass = classworkValues[2];
                 long dueDateInMillis = Long.parseLong(classworkValues[3]);
-                String location = classworkValues[4]; // Add the location field
+                String location = classworkValues[4];
 
                 Classwork classwork = new Classwork(title, type, associatedClass, dueDateInMillis, location);
                 classworkList.add(classwork);

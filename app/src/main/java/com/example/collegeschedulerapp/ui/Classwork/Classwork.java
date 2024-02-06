@@ -4,11 +4,10 @@ public class Classwork {
 
     private String name;
     private String classworkType;
-    private long dueDateInMillis; // Store due date as milliseconds for simplicity
+    private long dueDateInMillis;
     private String associatedClass;
     private String location;
 
-    // Constructors, getters, and setters
 
     public Classwork(String name, String classworkType, String associatedClass, long dueDateInMillis, String location) {
         this.name = name;
