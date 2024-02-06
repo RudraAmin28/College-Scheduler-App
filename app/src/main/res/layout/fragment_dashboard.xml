@@ -8,8 +8,6 @@
     android:background="@drawable/gradient_background">
 
 
-    <!-- Update the existing RecyclerView in fragment_dashboard.xml -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewClasswork"
         android:layout_width="match_parent"

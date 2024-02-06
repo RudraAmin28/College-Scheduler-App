@@ -117,7 +117,6 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content" />
 
-            <!-- Sunday TextView -->
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -131,13 +130,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!-- Sunday CheckBox -->
             <CheckBox
                 android:id="@+id/sundayCheckBox"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content" />
 
-            <!-- Sunday TextView -->
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
