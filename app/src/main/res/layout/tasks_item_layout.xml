@@ -21,33 +21,51 @@
             android:textColorHighlight="#4CAF50"
             android:textColorLink="#4CAF50"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/todoTitle"
+            app:layout_constraintEnd_toStartOf="@+id/taskDetails"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/todoTitle"
+        <LinearLayout
+            android:id="@+id/taskDetails"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center|start"
-            android:text="A PLACEHOLDER TASK ITEM"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="start"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/editTODO"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/checkBoxTODO"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/editTODO">
+
+            <TextView
+                android:id="@+id/taskTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:text="A PLACEHOLDER TASK ITEM"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/taskCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:text="A PLACEHOLDER TASK CATEGORY"
+                android:textAllCaps="false"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/editTODO"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
             android:background="@android:drawable/ic_menu_edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deleteTODO"
-            app:layout_constraintStart_toEndOf="@id/todoTitle"
+            app:layout_constraintStart_toEndOf="@id/taskDetails"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button

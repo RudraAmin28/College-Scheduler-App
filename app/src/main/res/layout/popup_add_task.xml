@@ -7,11 +7,20 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/editTextTask2"
+        android:id="@+id/editTextTaskTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Task Title"
-        android:inputType="text" />
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextTaskCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Task Category"
+        android:inputType="text"
+        android:minHeight="48dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,19 +28,17 @@
         android:layout_marginTop="8dp">
 
         <Button
-            android:id="@+id/buttonAddTask2"
+            android:id="@+id/buttonAddTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:text="Add" />
 
         <Button
-            android:id="@+id/buttonCancel2"
+            android:id="@+id/buttonCancelTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>

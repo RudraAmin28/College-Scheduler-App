@@ -105,16 +105,18 @@ public class TaskFragment extends Fragment implements TaskAdapter.OnDeleteButton
         AlertDialog dialog = builder.create();
 
         // Find views in the dialog layout
-        EditText editTextTask = dialogView.findViewById(R.id.editTextTask2);
-        Button buttonAddTask = dialogView.findViewById(R.id.buttonAddTask2);
-        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel2);
+        EditText editTextTaskTitle = dialogView.findViewById(R.id.editTextTaskTitle);
+        EditText editTextTaskCategory = dialogView.findViewById(R.id.editTextTaskCategory);
+        Button buttonAddTask = dialogView.findViewById(R.id.buttonAddTask);
+        Button buttonCancel = dialogView.findViewById(R.id.buttonCancelTask);
 
         // Set click listener for the "Add Task" button
         buttonAddTask.setOnClickListener(v -> {
-            String taskTitle = editTextTask.getText().toString();
+            String taskTitle = editTextTaskTitle.getText().toString();
+            String taskCategory = editTextTaskCategory.getText().toString();
             if (!taskTitle.isEmpty()) {
                 // Add the new task to the list
-                taskList.add(new Task(taskTitle, false));
+                taskList.add(new Task(taskTitle, taskCategory, false));
 
                 // Save tasks to SharedPreferences
                 saveTasksToPrefs();
@@ -184,19 +186,25 @@ public class TaskFragment extends Fragment implements TaskAdapter.OnDeleteButton
         AlertDialog dialog = builder.create();
 
         // Find views in the dialog layout
-        EditText editTextTask = dialogView.findViewById(R.id.editTextTask2);
-        Button buttonEditTask = dialogView.findViewById(R.id.buttonAddTask2);
-        Button buttonCancel = dialogView.findViewById(R.id.buttonCancel2);
+        EditText editTextTaskTitle = dialogView.findViewById(R.id.editTextTaskTitle);
+        EditText editTextTaskCategory = dialogView.findViewById(R.id.editTextTaskCategory);
+        Button buttonEditTask = dialogView.findViewById(R.id.buttonAddTask);
+        Button buttonCancel = dialogView.findViewById(R.id.buttonCancelTask);
 
         // Set the current task title in the edit text
-        editTextTask.setText(taskList.get(position).getTitle());
+        editTextTaskTitle.setText(taskList.get(position).getTitle());
+
+        // Set the current task category in the edit text
+        editTextTaskCategory.setText(taskList.get(position).getCategory());
 
         // Set click listener for the "Edit Task" button
         buttonEditTask.setOnClickListener(v -> {
-            String editedTaskTitle = editTextTask.getText().toString();
+            String editedTaskTitle = editTextTaskTitle.getText().toString();
+            String taskCategory = editTextTaskCategory.getText().toString();
             if (!editedTaskTitle.isEmpty()) {
-                // Update the task title
+                // Update the task
                 taskList.get(position).setTitle(editedTaskTitle);
+                taskList.get(position).setCategory(taskCategory);
 
                 // Save tasks to SharedPreferences
                 saveTasksToPrefs();
