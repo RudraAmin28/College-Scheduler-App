@@ -1,6 +1,7 @@
 package com.example.collegeschedulerapp.ui.Classwork;
 
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +31,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+import java.util.Locale;
 
 
 public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnClassworkEditListener {
@@ -125,8 +128,13 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         Spinner spinnerClass = view.findViewById(R.id.spinnerClass);
         DatePicker datePicker = view.findViewById(R.id.datePickerDueDate);
         EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
+
         Button buttonAddClasswork = view.findViewById(R.id.buttonAddClasswork);
         Button buttonCancelClasswork = view.findViewById(R.id.buttonCancelClasswork);
+
+
+        Button buttonTime = view.findViewById(R.id.ButtonTime);
+        TextView selectedTime = view.findViewById(R.id.selectedTime);
 
         String[] classesArr = new String[ClassesFragment.returnClassList().size()];
         for (int i = 0; i < ClassesFragment.returnClassList().size(); i++) {
@@ -157,16 +165,24 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 String classes = spinnerClass.getSelectedItem().toString();
                 long dueDateInMillis = getDueDateInMillis(datePicker);
                 String location = editTextLocation.getText().toString();
+                String time = selectedTime.getText().toString();
                 if (editTextLocation.getText().toString().isEmpty()) {
                     location = "N/A";
                 }
 
-                Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis, location);
+                Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis, location, time);
                 classworkList.add(newClasswork);
                 sortClassworkList(sortBy);
                 classworkAdapter.notifyDataSetChanged();
                 saveClassworkToPrefs();
                 dialog.dismiss();
+            }
+        });
+
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(selectedTime);
             }
         });
 
@@ -191,9 +207,12 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         Button buttonUpdateClasswork = view.findViewById(R.id.buttonUpdateClasswork);
         Button buttonCancelEdit = view.findViewById(R.id.buttonCancelEdit);
         EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
+        Button buttonTime = view.findViewById(R.id.ButtonTime);
+        TextView selectedTime = view.findViewById(R.id.selectedTime);
 
         editTextTitle.setText(classwork.getName());
         editTextLocation.setText(classwork.getLocation());
+        selectedTime.setText(classwork.getTime());
 
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(requireContext(),
                 R.array.classwork_types, android.R.layout.simple_spinner_item);
@@ -238,6 +257,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 String classes = spinnerClass.getSelectedItem().toString();
                 long dueDateInMillis = getDueDateInMillis(datePicker);
                 String location = editTextLocation.getText().toString();
+                String time = selectedTime.getText().toString();
                 if (editTextLocation.getText().toString().isEmpty()) {
                     location = "N/A";
                 }
@@ -248,6 +268,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 classwork.setAssociatedClass(classes);
                 classwork.setDueDateInMillis(dueDateInMillis);
                 classwork.setLocation(location);
+                classwork.setTime(time);
 
 
                 sortClassworkList(sortBy);
@@ -302,7 +323,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
 
         StringBuilder stringBuilder = new StringBuilder();
         for (Classwork classwork : classworkList) {
-            stringBuilder.append(classwork.getName()).append(",").append(classwork.getClassworkType()).append(",").append(classwork.getAssociatedClass()).append(",").append(classwork.getDueDateInMillis()).append(",").append(classwork.getLocation()).append(";");
+            stringBuilder.append(classwork.getName()).append(",").append(classwork.getClassworkType()).append(",").append(classwork.getAssociatedClass()).append(",").append(classwork.getDueDateInMillis()).append(",").append(classwork.getLocation()).append(",").append(classwork.getTime()).append(";");
         }
         return stringBuilder.toString();
     }
@@ -322,14 +343,15 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         String[] classworkArray = classworkData.split(";");
         for (String classworkString : classworkArray) {
             String[] classworkValues = classworkString.split(",");
-            if (classworkValues.length == 5) {
+            if (classworkValues.length == 6) {
                 String title = classworkValues[0];
                 String type = classworkValues[1];
                 String associatedClass = classworkValues[2];
                 long dueDateInMillis = Long.parseLong(classworkValues[3]);
                 String location = classworkValues[4];
+                String time = classworkValues[5];
 
-                Classwork classwork = new Classwork(title, type, associatedClass, dueDateInMillis, location);
+                Classwork classwork = new Classwork(title, type, associatedClass, dueDateInMillis, location, time);
                 classworkList.add(classwork);
             }
         }
@@ -346,5 +368,34 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         calendar.set(year, month, day);
 
         return calendar.getTimeInMillis();
+    }
+
+    private void showTimePickerDialog(final TextView textView) {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                requireActivity(),
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                        // Format the selected time and set it to the TextView in AM/PM format
+                        String amPm;
+                        int hour;
+                        if (hourOfDay >= 12) {
+                            amPm = "PM";
+                            hour = (hourOfDay == 12) ? 12 : (hourOfDay - 12);
+                        } else {
+                            amPm = "AM";
+                            hour = (hourOfDay == 0) ? 12 : hourOfDay;
+                        }
+
+                        String formattedTime = String.format(Locale.getDefault(), "%02d:%02d %s", hour, minute, amPm);
+                        textView.setText(formattedTime);
+                    }
+                },
+                0,
+                0,
+                false
+        );
+
+        timePickerDialog.show();
     }
 }
