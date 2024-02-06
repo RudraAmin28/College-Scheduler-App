@@ -4,6 +4,10 @@
         <item>Assignment</item>
         <item>Exam</item>
         <item>Quiz</item>
-        <!-- Add more classwork types as needed -->
+    </string-array>
+
+    <string-array name="sorting_types">
+        <item>Due Date</item>
+        <item>Class</item>
     </string-array>
 </resources>

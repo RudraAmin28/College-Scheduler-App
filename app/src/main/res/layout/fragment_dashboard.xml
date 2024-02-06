@@ -14,18 +14,19 @@
         android:id="@+id/recyclerViewClasswork"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
         android:clipToPadding="false"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
         android:paddingTop="0dp"
+        android:paddingEnd="16dp"
         android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/classwork_item_layout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,4 +41,28 @@
         app:backgroundTint="#93A7D1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Sort By: "
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="#dcd6f7"
+        android:entries="@array/sorting_types"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewClasswork"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

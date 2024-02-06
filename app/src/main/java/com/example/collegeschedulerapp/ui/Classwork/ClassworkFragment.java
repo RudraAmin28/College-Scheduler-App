@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,6 +24,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -53,20 +56,64 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         recyclerViewClasswork.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerViewClasswork.setAdapter(classworkAdapter);
 
+        Spinner spinner = view.findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Sort the classworkList based on the selected option
+                sortClassworkList(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+
         // Set up FloatingActionButton click listener
         floatingActionButtonClasswork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddClassworkDialog();
+                int sortBy = spinner.getSelectedItemPosition(); // Assuming you have a spinner for sorting
+                showAddClassworkDialog(sortBy);
             }
         });
+
 
         loadClassworkFromPrefs();
 
         return view;
     }
 
-    private void showAddClassworkDialog() {
+
+    private void sortClassworkList(int sortBy) {
+        // Sort the classworkList based on the selected option
+        switch (sortBy) {
+            case 1: // Sort by class
+                Collections.sort(classworkList, new Comparator<Classwork>() {
+                    @Override
+                    public int compare(Classwork c1, Classwork c2) {
+                        return c1.getAssociatedClass().compareToIgnoreCase(c2.getAssociatedClass());
+                    }
+                });
+                break;
+            case 0: // Sort by due date
+                Collections.sort(classworkList, new Comparator<Classwork>() {
+                    @Override
+                    public int compare(Classwork c1, Classwork c2) {
+                        return Long.compare(c1.getDueDateInMillis(), c2.getDueDateInMillis());
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+
+        // Notify the adapter of the changes in the dataset
+        classworkAdapter.notifyDataSetChanged();
+    }
+
+    private void showAddClassworkDialog(int sortBy) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.popup_add_classwork, null);
 
@@ -78,8 +125,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
         Button buttonAddClasswork = view.findViewById(R.id.buttonAddClasswork);
         Button buttonCancelClasswork = view.findViewById(R.id.buttonCancelClasswork);
-
-
 
         // Set up ArrayAdapter for the Classwork Type Spinner
         String[] classesArr = new String[ClassesFragment.returnClassList().size()];
@@ -108,8 +153,11 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 // Create a new Classwork object
                 Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis, location);
 
-                // Add the new classwork item to the list (assuming classworkList is accessible)
+                // Add the new classwork item to the list
                 classworkList.add(newClasswork);
+
+                // Sort the classworkList based on the selected option
+                sortClassworkList(sortBy);
 
                 // Notify the adapter that data has changed
                 classworkAdapter.notifyDataSetChanged();
