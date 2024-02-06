@@ -75,10 +75,10 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         Spinner spinnerType = view.findViewById(R.id.spinnerClassworkType);
         Spinner spinnerClass = view.findViewById(R.id.spinnerClass);
         DatePicker datePicker = view.findViewById(R.id.datePickerDueDate);
-        Button buttonAddClass = view.findViewById(R.id.buttonAddClass);
+        EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
+        Button buttonAddClasswork = view.findViewById(R.id.buttonAddClasswork);
         Button buttonCancelClasswork = view.findViewById(R.id.buttonCancelClasswork);
 
-        EditText editTextLocation = view.findViewById(R.id.editClassworkLocation);
 
 
         // Set up ArrayAdapter for the Classwork Type Spinner
@@ -95,7 +95,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         builder.setView(view);
         AlertDialog dialog = builder.create();
 
-        buttonAddClass.setOnClickListener(new View.OnClickListener() {
+        buttonAddClasswork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Retrieve data from dialog views
@@ -103,9 +103,9 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 String type = spinnerType.getSelectedItem().toString();
                 String classes = spinnerClass.getSelectedItem().toString();
                 long dueDateInMillis = getDueDateInMillis(datePicker);
+                String location = editTextLocation.getText().toString();
 
                 // Create a new Classwork object
-                String location = editTextLocation.getText().toString();
                 Classwork newClasswork = new Classwork(title, type, classes, dueDateInMillis, location);
 
                 // Add the new classwork item to the list (assuming classworkList is accessible)

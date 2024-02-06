@@ -1,12 +1,12 @@
 package com.example.collegeschedulerapp.ui.ToDo;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.CheckBox;
-
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +63,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Task task = taskList.get(position);
+
         holder.titleTextView.setText(task.getTitle());
+        if (task.isChecked()) {
+            holder.titleTextView.setPaintFlags(holder.titleTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            holder.titleTextView.setPaintFlags(holder.titleTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
 
         // Set the checkbox state without triggering the listener
         holder.checkBox.setOnCheckedChangeListener(null);
@@ -85,13 +91,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
         public CheckBox checkBox;
+        public Button buttonEdit;
 
         public ViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.todoTitle);
             checkBox = itemView.findViewById(R.id.checkBoxTODO);
+            buttonEdit = itemView.findViewById(R.id.editTODO);
 
-            Button buttonEdit = itemView.findViewById(R.id.editTODO);
             buttonEdit.setOnClickListener(v -> {
                 if (onEditButtonClickListener != null) {
                     onEditButtonClickListener.onEditButtonClick(getAdapterPosition());
