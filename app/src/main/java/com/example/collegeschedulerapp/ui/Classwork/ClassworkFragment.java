@@ -40,7 +40,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
     private ClassworkAdapter classworkAdapter;
     private Spinner spinner;
 
-    // ...
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +79,13 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 // Access the selected item position from the spinner
                 int sortBy = spinner.getSelectedItemPosition();
                 showAddClassworkDialog(sortBy);
+            }
+        });
+
+        classworkAdapter.setOnClassworkDeleteListener(new ClassworkAdapter.OnClassworkDeleteListener() {
+            @Override
+            public void onDeleteClasswork(int position) {
+                deleteClasswork(position);
             }
         });
 
@@ -293,6 +299,19 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         // Handle the edit action for the classwork
         int sortBy = spinner.getSelectedItemPosition();// Assuming you have a spinner for sorting
         showEditClassworkDialog(classwork, sortBy);
+    }
+
+    private void deleteClasswork(int position) {
+        if (position >= 0 && position < classworkList.size()) {
+            // Remove classwork from the list
+            classworkList.remove(position);
+
+            // Save the updated classwork list
+            saveClassworkToPrefs();
+
+            // Notify the adapter about the removal
+            classworkAdapter.notifyItemRemoved(position);
+        }
     }
 
     private void saveClassworkToPrefs() {

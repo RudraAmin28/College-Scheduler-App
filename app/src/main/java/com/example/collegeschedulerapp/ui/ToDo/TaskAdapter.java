@@ -73,7 +73,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             holder.categoryTextView.setPaintFlags(holder.titleTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
 
-        if (task.getCategory() == null) {
+        if (task.getCategory().isEmpty()) {
             holder.categoryTextView.setText("Category: N/A");
         } else {
             holder.categoryTextView.setText("Category: " + task.getCategory());

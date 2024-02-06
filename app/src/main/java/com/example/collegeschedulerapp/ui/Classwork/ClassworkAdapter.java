@@ -20,6 +20,8 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
     private Context context;
     private List<Classwork> classworkList;
     private OnClassworkEditListener editListener;
+    private OnClassworkDeleteListener deleteListener;
+
 
     public interface OnClassworkEditListener {
         void onEditClasswork(Classwork classwork);
@@ -27,6 +29,14 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
 
     public void setOnClassworkEditListener(OnClassworkEditListener listener) {
         this.editListener = listener;
+    }
+
+    public interface OnClassworkDeleteListener {
+        void onDeleteClasswork(int position);
+    }
+
+    public void setOnClassworkDeleteListener(OnClassworkDeleteListener listener) {
+        this.deleteListener = listener;
     }
 
     public ClassworkAdapter(Context context, List<Classwork> classworkList) {
@@ -84,10 +94,8 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Classwork classwork = classworkList.get(position);
-                        classworkList.remove(position);
-                        notifyItemRemoved(position);
+                    if (position != RecyclerView.NO_POSITION && deleteListener != null) {
+                        deleteListener.onDeleteClasswork(position);
                     }
                 }
             });
@@ -99,7 +107,12 @@ public class ClassworkAdapter extends RecyclerView.Adapter<ClassworkAdapter.View
             textViewType.setText("Type: " + classwork.getClassworkType());
             textViewClass.setText("Class: " + classwork.getAssociatedClass());
             textViewDueDate.setText("Due Date: " + formatDate(classwork.getDueDateInMillis()));
-            locationTextView.setText("Location: " + classwork.getLocation());
+            if (classwork.getLocation().isEmpty()) {
+                locationTextView.setText("Location: N/A");
+            } else {
+                locationTextView.setText("Location: " + classwork.getLocation());
+            }
+
         }
 
         private String formatDate(long millis) {
