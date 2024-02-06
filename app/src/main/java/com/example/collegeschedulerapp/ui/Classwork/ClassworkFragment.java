@@ -23,6 +23,7 @@ import com.example.collegeschedulerapp.ui.Classes.ClassesFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,6 +38,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
     private FloatingActionButton floatingActionButtonClasswork;
     private List<Classwork> classworkList;
     private ClassworkAdapter classworkAdapter;
+    private Spinner spinner;
 
     // ...
 
@@ -56,7 +58,8 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         recyclerViewClasswork.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerViewClasswork.setAdapter(classworkAdapter);
 
-        Spinner spinner = view.findViewById(R.id.spinner);
+        // Initialize the spinner
+        spinner = view.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -74,11 +77,11 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         floatingActionButtonClasswork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int sortBy = spinner.getSelectedItemPosition(); // Assuming you have a spinner for sorting
+                // Access the selected item position from the spinner
+                int sortBy = spinner.getSelectedItemPosition();
                 showAddClassworkDialog(sortBy);
             }
         });
-
 
         loadClassworkFromPrefs();
 
@@ -132,6 +135,14 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
             classesArr[i] = ClassesFragment.returnClassList().get(i).getClassName();
         }
 
+// Sort the classesArr array
+        Arrays.sort(classesArr, new Comparator<String>() {
+            @Override
+            public int compare(String c1, String c2) {
+                return c1.compareToIgnoreCase(c2);
+            }
+        });
+
         ArrayAdapter<String> classAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_item, classesArr);
         classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -181,7 +192,7 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         dialog.show();
     }
 
-    private void showEditClassworkDialog(Classwork classwork) {
+    private void showEditClassworkDialog(Classwork classwork, int sortBy) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.popup_edit_classwork, null);
 
@@ -210,6 +221,13 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
         for (int i = 0; i < ClassesFragment.returnClassList().size(); i++) {
             classesArr[i] = ClassesFragment.returnClassList().get(i).getClassName();
         }
+
+        Arrays.sort(classesArr, new Comparator<String>() {
+            @Override
+            public int compare(String c1, String c2) {
+                return c1.compareToIgnoreCase(c2);
+            }
+        });
 
         ArrayAdapter<String> classAdapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_item, classesArr);
@@ -243,6 +261,8 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
                 classwork.setAssociatedClass(classes);
                 classwork.setDueDateInMillis(dueDateInMillis);
 
+                sortClassworkList(sortBy);
+
                 // Notify the adapter that data has changed for the specific Classwork object
                 int position = classworkList.indexOf(classwork);
                 if (position != -1) {
@@ -271,7 +291,8 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
     @Override
     public void onEditClasswork(Classwork classwork) {
         // Handle the edit action for the classwork
-        showEditClassworkDialog(classwork);
+        int sortBy = spinner.getSelectedItemPosition();// Assuming you have a spinner for sorting
+        showEditClassworkDialog(classwork, sortBy);
     }
 
     private void saveClassworkToPrefs() {
