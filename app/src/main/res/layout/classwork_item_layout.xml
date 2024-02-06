@@ -36,7 +36,6 @@
             app:layout_constraintStart_toEndOf="@+id/checkBoxClasswork"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Display the classwork title -->
             <TextView
                 android:id="@+id/textViewClassworkTitle"
                 android:layout_width="wrap_content"
@@ -45,7 +44,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Display the classwork type -->
             <TextView
                 android:id="@+id/textViewClassworkType"
                 android:layout_width="wrap_content"
@@ -54,7 +52,6 @@
                 android:text="Placeholder type"
                 android:textSize="18sp" />
 
-            <!-- Display the associated class -->
             <TextView
                 android:id="@+id/textViewClass"
                 android:layout_width="wrap_content"
@@ -63,13 +60,19 @@
                 android:text="Placeholder class"
                 android:textSize="18sp" />
 
-            <!-- Display the due date -->
             <TextView
                 android:id="@+id/textViewDueDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:text="Placeholder due date"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Placeholder Time"
                 android:textSize="18sp" />
 
             <TextView

@@ -284,6 +284,13 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
             }
         });
 
+        buttonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePickerDialog(selectedTime);
+            }
+        });
+
         buttonCancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
