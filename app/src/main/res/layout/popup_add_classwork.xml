@@ -10,14 +10,13 @@
         android:id="@+id/editClassworkTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Classwork Title"
-        android:layout_marginBottom="8dp"/>
+        android:hint="@string/enter_classwork_title"
+        android:layout_marginBottom="8dp" />
 
     <Spinner
         android:id="@+id/spinnerClassworkType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Select Classwork Type"
         android:layout_marginBottom="8dp"
         android:entries="@array/classwork_types"/>
 
@@ -25,14 +24,13 @@
         android:id="@+id/spinnerClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Select Class"
         android:layout_marginBottom="8dp" />
 
     <EditText
         android:id="@+id/editClassworkLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Classwork Location"
+        android:hint="@string/enter_classwork_location"
         android:layout_marginBottom="8dp"/>
 
     <DatePicker
@@ -50,13 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:text="Add" />
+            android:text="@string/add" />
 
         <Button
             android:id="@+id/buttonCancelClasswork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>

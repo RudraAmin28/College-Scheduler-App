@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -10,14 +9,14 @@
         android:id="@+id/addClassNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Class Name"
+        android:hint="@string/enter_class_name"
         android:inputType="text" />
 
     <EditText
         android:id="@+id/addClassProfessorTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Professor Name"
+        android:hint="@string/enter_professor_name"
         android:inputType="text" />
 
 
@@ -154,7 +153,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="Start time: "
+            android:text="@string/start_time"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -173,7 +172,7 @@
             android:id="@+id/ButtonStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick Time"
+            android:text="@string/pick_time"
             android:textAllCaps="false"
             android:layout_alignParentEnd="true" />
 
@@ -188,7 +187,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="End time: "
+            android:text="@string/end_time"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -207,7 +206,7 @@
             android:id="@+id/ButtonEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick Time"
+            android:text="@string/pick_time"
             android:textAllCaps="false"
             android:layout_alignParentEnd="true" />
 
@@ -226,16 +225,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:text="Add" />
+            android:text="@string/add" />
 
         <Button
             android:id="@+id/buttonCancelClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:text="@string/cancel"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 </LinearLayout>

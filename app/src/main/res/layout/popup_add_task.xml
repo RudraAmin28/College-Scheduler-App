@@ -10,7 +10,7 @@
         android:id="@+id/editTextTaskTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Task Title"
+        android:hint="@string/enter_task_title"
         android:inputType="text"
         android:minHeight="48dp" />
 
@@ -18,7 +18,7 @@
         android:id="@+id/editTextTaskCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Task Category"
+        android:hint="@string/enter_task_category"
         android:inputType="text"
         android:minHeight="48dp" />
 
@@ -32,13 +32,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:text="Add" />
+            android:text="@string/add" />
 
         <Button
             android:id="@+id/buttonCancelTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>

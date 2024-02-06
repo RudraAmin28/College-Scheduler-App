@@ -3,4 +3,16 @@
     <string name="title_classes">Classes</string>
     <string name="title_classwork">Classwork</string>
     <string name="title_todo">Tasks</string>
+    <string name="enter_task_category">Enter Task Category (optional)</string>
+    <string name="enter_task_title">Enter Task Title</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="enter_classwork_title">Enter Classwork Title</string>
+    <string name="enter_classwork_location">Enter Classwork Location</string>
+    <string name="enter_class_name">Enter Class Name</string>
+    <string name="enter_professor_name">Enter Professor Name</string>
+    <string name="start_time">Start time:</string>
+    <string name="end_time">End time:</string>
+    <string name="pick_time">Pick Time</string>
 </resources>
