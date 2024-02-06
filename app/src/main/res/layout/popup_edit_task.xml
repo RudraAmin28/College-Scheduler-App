@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:text="Edit Task" />
+            android:text="Update" />
 
         <Button
             android:id="@+id/buttonCancel2"

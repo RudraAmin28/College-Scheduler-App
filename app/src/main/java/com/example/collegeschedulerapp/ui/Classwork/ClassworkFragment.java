@@ -235,7 +235,6 @@ public class ClassworkFragment extends Fragment implements ClassworkAdapter.OnCl
 
         editor.putString("classworkData", classworkData);
         editor.apply();
-        System.out.println("saved");
     }
 
 
