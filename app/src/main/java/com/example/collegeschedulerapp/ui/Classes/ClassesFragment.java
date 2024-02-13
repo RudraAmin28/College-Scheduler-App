@@ -26,6 +26,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -172,6 +174,7 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
                 Classes newClass = new Classes(className, professorName, selectedStartTime.getText().toString(), selectedEndTime.getText().toString(), selectedDays);
                 classesList.add(newClass);
 
+                sortClassList();
                 saveTasksToPrefs();
 
                 classesAdapter.notifyDataSetChanged();
@@ -301,6 +304,7 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
                 classesList.get(position).setEndTime(editedEndTime);
                 classesList.get(position).setSelectedDays(editedSelectedDays);
 
+                sortClassList();
                 saveTasksToPrefs();
                 classesAdapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -325,6 +329,15 @@ public class ClassesFragment extends Fragment implements ClassAdapter.OnDeleteBu
 
         buttonCancelClass.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
+    }
+
+    private static void sortClassList() {
+        Collections.sort(classesList, new Comparator<Classes>() {
+            @Override
+            public int compare(Classes c1, Classes c2) {
+                return c1.getClassName().compareToIgnoreCase(c2.getClassName());
+            }
+        });
     }
 
     public static ArrayList<Classes> returnClassList() {
